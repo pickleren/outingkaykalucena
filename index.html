@@ -62,7 +62,7 @@
       color: var(--slate-800);
       line-height: 1.5;
       min-height: 100vh;
-      padding-bottom: 6.5rem;
+      padding-bottom: 9.5rem;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
@@ -1079,6 +1079,7 @@
       left: 0;
       right: 0;
       z-index: 30;
+      padding-bottom: calc(52px + env(safe-area-inset-bottom, 0px));
       background: rgba(255, 255, 255, 0.98);
       border-top: 1px solid var(--slate-200);
       box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
@@ -2042,8 +2043,8 @@
       { id: "it-6", day: "Day 1 (Dec. 5)", time: "10:30 – 11:00 am", activity: "Back to Transient", assignee: "" },
       { id: "it-7", day: "Day 1 (Dec. 5)", time: "11:00 am", activity: "Ihaw / Cook preparation", assignee: "" },
       { id: "it-8", day: "Day 1 (Dec. 5)", time: "12:00 PM", activity: "Lunch break", assignee: "" },
-      { id: "it-9", day: "Day 1 (Dec. 5)", time: "1:00 pm", activity: "Shot", assignee: "" },
-      { id: "it-10", day: "Day 1 (Dec. 5)", time: "2:00 pm", activity: "Lipat na sa Kabilang Transient", assignee: "" },
+      { id: "it-9", day: "Day 1 (Dec. 5)", time: "1:00 pm", activity: "Lipat na sa Kabilang Transient", assignee: "" },
+      { id: "it-10", day: "Day 1 (Dec. 5)", time: "2:00 pm", activity: "Shot", assignee: "" },
       { id: "it-11", day: "Day 1 (Dec. 5)", time: "3:00 pm", activity: "Swimming session", assignee: "" },
       { id: "it-12", day: "Day 1 (Dec. 5)", time: "18:00:00", activity: "Curfew at the beach", assignee: "" },
       { id: "it-13", day: "Day 2 (Dec. 6)", time: "5:00 / 6:00 AM", activity: "Cook", assignee: "" },
@@ -2211,6 +2212,7 @@
       } catch (err) {
         // Ignore storage errors on restricted browsers
       }
+      scheduleFirebasePush();
     }
 
     function loadAllState() {
@@ -3131,10 +3133,87 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
+    // ==================== FIREBASE REALTIME DATABASE SYNC ====================
+    const FIREBASE_DB_URL = "https://outing-kay-ka-lucena-default-rtdb.asia-southeast1.firebasedatabase.app";
+    const FIREBASE_SYNC_PATH = "/pa-outing-ka-lucena/v10.json";
+    let isApplyingRemoteState = false;
+    let cloudSyncTimer = null;
+
+    function buildSyncPayload() {
+      return {
+        updatedAt: Date.now(),
+        checkedState,
+        customItems,
+        deletedItems,
+        marketTeam,
+        itineraryData,
+        tokaDishes,
+        priceItems,
+        membersLedger,
+        budgetAllocation
+      };
+    }
+
+    async function pushStateToFirebase() {
+      if (isApplyingRemoteState) return;
+      try {
+        await fetch(`${FIREBASE_DB_URL}${FIREBASE_SYNC_PATH}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(buildSyncPayload())
+        });
+      } catch (err) {
+        // Offline/network fallback: localStorage remains intact
+      }
+    }
+
+    async function pullStateFromFirebase() {
+      try {
+        const res = await fetch(`${FIREBASE_DB_URL}${FIREBASE_SYNC_PATH}`, { cache: "no-store" });
+        if (!res.ok) return;
+        const remote = await res.json();
+        if (!remote || typeof remote !== "object") return;
+
+        isApplyingRemoteState = true;
+        applyBundle(remote);
+        try {
+          const payload = {
+            checkedState,
+            customItems,
+            deletedItems,
+            marketTeam,
+            itineraryData,
+            tokaDishes,
+            priceItems,
+            membersLedger,
+            budgetAllocation
+          };
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        } catch (err) {
+          // Ignore storage errors
+        }
+        renderAll();
+      } catch (err) {
+        // Ignore transient network errors
+      } finally {
+        isApplyingRemoteState = false;
+      }
+    }
+
+    function scheduleFirebasePush() {
+      if (isApplyingRemoteState) return;
+      clearTimeout(cloudSyncTimer);
+      cloudSyncTimer = setTimeout(() => {
+        pushStateToFirebase();
+      }, 400);
+    }
+
     // ==================== INITIALIZE APP ====================
     window.addEventListener("DOMContentLoaded", () => {
       loadAllState();
       renderAll();
+      pullStateFromFirebase();
+      setInterval(pullStateFromFirebase, 5000);
     });
   </script>
 </body>
