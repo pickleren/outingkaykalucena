@@ -62,7 +62,7 @@
       color: var(--slate-800);
       line-height: 1.5;
       min-height: 100vh;
-      padding-bottom: 9.5rem;
+      padding-bottom: 6.5rem;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
@@ -84,8 +84,8 @@
       top: 0;
       z-index: 30;
       box-shadow: 0 4px 14px rgba(15, 118, 110, 0.18);
-      border-bottom-left-radius: 1.5rem;
-      border-bottom-right-radius: 1.5rem;
+      border-bottom-left-radius: 1.35rem;
+      border-bottom-right-radius: 1.35rem;
     }
 
     .container {
@@ -96,14 +96,14 @@
     }
 
     .header-inner {
-      padding-top: 1rem;
-      padding-bottom: 1rem;
+      padding-top: 0.78rem;
+      padding-bottom: 0.85rem;
     }
 
-.header-top {
+    .header-top {
       display: flex;
       flex-direction: column;
-      gap: 0.45rem;
+      gap: 0.42rem;
     }
 
     .header-actions-row {
@@ -115,40 +115,48 @@
     }
 
     @media (min-width: 640px) {
+      .header-inner {
+        padding-top: 0.95rem;
+        padding-bottom: 0.95rem;
+      }
       .header-top {
         flex-direction: row;
         align-items: flex-start;
         justify-content: space-between;
         gap: 0.75rem;
       }
+      .header-actions-row {
+        display: contents;
+      }
     }
 
     .trip-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.3rem;
       background: rgba(255, 255, 255, 0.18);
-      padding: 0.22rem 0.6rem;
+      padding: 0.2rem 0.55rem;
       border-radius: 9999px;
-      font-size: 0.65rem;
+      font-size: 0.64rem;
       font-weight: 800;
-      letter-spacing: 0.03em;
-      color: var(--ocean-50);
+      letter-spacing: 0.02em;
+      color: var(--white);
     }
 
     .app-title {
-      font-size: 1.12rem;
+      font-size: 1.08rem;
       font-weight: 900;
       line-height: 1.2;
       letter-spacing: -0.01em;
+      color: var(--white);
     }
 
     .app-subtitle {
-      font-size: 0.74rem;
-      color: #cffafe;
+      font-size: 0.73rem;
+      color: #e0f2fe;
       font-weight: 500;
-      margin-top: 0.15rem;
-      line-height: 1.35;
+      margin-top: 0.12rem;
+      line-height: 1.3;
     }
 
     .btn-header-copy {
@@ -156,14 +164,14 @@
       background: var(--white);
       color: var(--ocean-800);
       border: none;
-      padding: 0.36rem 0.68rem;
-      border-radius: 0.75rem;
-      font-size: 0.7rem;
+      padding: 0.34rem 0.65rem;
+      border-radius: 0.7rem;
+      font-size: 0.69rem;
       font-weight: 700;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
+      gap: 0.28rem;
       cursor: pointer;
     }
 
@@ -173,21 +181,22 @@
 
     /* Progress Bar Card */
     .progress-box {
-      margin-top: 0.8rem;
-      background: rgba(0, 0, 0, 0.22);
-      border-radius: 1rem;
-      padding: 0.65rem 0.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      margin-top: 0.65rem;
+      background: rgba(15, 23, 42, 0.28);
+      border-radius: 0.85rem;
+      padding: 0.52rem 0.72rem;
+      border: 1px solid rgba(255, 255, 255, 0.18);
     }
 
     .progress-meta {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       font-weight: 600;
-      margin-bottom: 0.38rem;
+      margin-bottom: 0.3rem;
       gap: 0.5rem;
+      color: var(--white);
     }
 
     .progress-count {
@@ -198,9 +207,9 @@
 
     .progress-track {
       width: 100%;
-      background: rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.24);
       border-radius: 9999px;
-      height: 0.52rem;
+      height: 0.45rem;
       overflow: hidden;
     }
 
@@ -214,7 +223,7 @@
 
     /* Main Layout */
     .main-content {
-      padding-top: 1rem;
+      padding-top: 0.9rem;
     }
 
     .stack-md > * + * {
@@ -238,12 +247,13 @@
       display: flex;
       gap: 0.4rem;
       flex-wrap: wrap;
+      align-items: center;
     }
 
     .btn-day-pill {
-      padding: 0.5rem 0.8rem;
+      padding: 0.46rem 0.75rem;
       border-radius: 0.75rem;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-weight: 700;
       border: 1px solid var(--ocean-200);
       background: var(--white);
@@ -262,12 +272,12 @@
     .btn-text-link {
       background: none;
       border: none;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-weight: 700;
       color: var(--ocean-700);
       text-decoration: underline;
       text-underline-offset: 3px;
-      padding: 0.4rem 0.5rem;
+      padding: 0.35rem 0.45rem;
       cursor: pointer;
     }
 
@@ -277,26 +287,26 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 0.25rem;
-      margin-bottom: 0.65rem;
+      margin-bottom: 0.6rem;
       gap: 0.5rem;
     }
 
     .day-title {
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       font-weight: 800;
       color: var(--ocean-900);
     }
 
     .day-sub {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--slate-500);
       font-weight: 500;
     }
 
     .course-count-badge {
-      font-size: 0.7rem;
+      font-size: 0.69rem;
       font-weight: 700;
-      padding: 0.25rem 0.6rem;
+      padding: 0.22rem 0.58rem;
       border-radius: 9999px;
       background: var(--ocean-100);
       color: var(--ocean-800);
@@ -313,11 +323,11 @@
 
     .meal-card-btn {
       width: 100%;
-      padding: 0.85rem 1rem;
+      padding: 0.8rem 0.95rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 0.75rem;
+      gap: 0.7rem;
       text-align: left;
       background: transparent;
       border: none;
@@ -331,19 +341,19 @@
     .meal-left {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.7rem;
       min-width: 0;
     }
 
     .meal-emoji {
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 0.75rem;
+      width: 2.35rem;
+      height: 2.35rem;
+      border-radius: 0.7rem;
       background: var(--sand-100);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       flex-shrink: 0;
     }
 
@@ -355,29 +365,29 @@
     }
 
     .meal-type {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 800;
       color: var(--slate-800);
     }
 
     .meal-summary-tag {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 600;
       color: var(--ocean-700);
       background: var(--ocean-50);
-      padding: 0.15rem 0.45rem;
+      padding: 0.14rem 0.45rem;
       border-radius: 0.375rem;
     }
 
     .meal-note {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--slate-500);
-      margin-top: 0.15rem;
+      margin-top: 0.12rem;
     }
 
     .chevron-icon {
-      width: 1.25rem;
-      height: 1.25rem;
+      width: 1.2rem;
+      height: 1.2rem;
       color: var(--slate-400);
       flex-shrink: 0;
       transition: transform 0.2s ease;
@@ -388,7 +398,7 @@
     }
 
     .meal-body {
-      padding: 0.75rem 1rem 1rem;
+      padding: 0.72rem 0.95rem 0.95rem;
       border-top: 1px solid var(--slate-100);
       background: rgba(248, 250, 252, 0.65);
     }
@@ -396,12 +406,12 @@
     .dish-box {
       background: var(--white);
       border-radius: 0.75rem;
-      padding: 0.75rem;
+      padding: 0.72rem;
       border: 1px solid var(--slate-100);
     }
 
     .dish-box + .dish-box {
-      margin-top: 0.65rem;
+      margin-top: 0.6rem;
     }
 
     .dish-header {
@@ -410,19 +420,19 @@
       justify-content: space-between;
       gap: 0.5rem;
       flex-wrap: wrap;
-      margin-bottom: 0.45rem;
+      margin-bottom: 0.4rem;
     }
 
     .dish-name {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 700;
       color: var(--slate-800);
     }
 
     .dish-badge {
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       font-weight: 700;
-      padding: 0.18rem 0.55rem;
+      padding: 0.16rem 0.5rem;
       border-radius: 9999px;
     }
 
@@ -440,9 +450,9 @@
 
     .dish-list {
       list-style: none;
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       color: var(--slate-600);
-      line-height: 1.48;
+      line-height: 1.45;
     }
 
     .dish-list li {
@@ -452,7 +462,7 @@
     }
 
     .dish-list li + li {
-      margin-top: 0.35rem;
+      margin-top: 0.3rem;
     }
 
     .bullet-dot {
@@ -463,12 +473,13 @@
     /* Checklist Controls */
     .search-add-row {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.45rem;
+      flex-wrap: wrap;
     }
 
     .search-wrapper {
       position: relative;
-      flex: 1;
+      flex: 1 1 12rem;
       min-width: 0;
     }
 
@@ -477,7 +488,7 @@
       height: 1rem;
       color: var(--slate-400);
       position: absolute;
-      left: 0.85rem;
+      left: 0.8rem;
       top: 50%;
       transform: translateY(-50%);
       pointer-events: none;
@@ -485,11 +496,11 @@
 
     .search-input {
       width: 100%;
-      padding: 0.68rem 2rem 0.68rem 2.3rem;
+      padding: 0.62rem 2rem 0.62rem 2.2rem;
       background: var(--white);
       border: 1px solid var(--slate-200);
-      border-radius: 1rem;
-      font-size: 0.85rem;
+      border-radius: 0.9rem;
+      font-size: 0.84rem;
       color: var(--slate-800);
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
     }
@@ -501,14 +512,14 @@
 
     .btn-clear-search {
       position: absolute;
-      right: 0.6rem;
+      right: 0.55rem;
       top: 50%;
       transform: translateY(-50%);
       background: none;
       border: none;
       color: var(--slate-400);
       font-size: 0.85rem;
-      padding: 0.3rem;
+      padding: 0.25rem;
       cursor: pointer;
     }
 
@@ -516,10 +527,10 @@
       background: var(--ocean-600);
       color: var(--white);
       border: none;
-      padding: 0 0.95rem;
-      min-height: 2.65rem;
-      border-radius: 1rem;
-      font-size: 0.78rem;
+      padding: 0 0.85rem;
+      min-height: 2.45rem;
+      border-radius: 0.9rem;
+      font-size: 0.76rem;
       font-weight: 700;
       display: inline-flex;
       align-items: center;
@@ -534,10 +545,10 @@
       background: var(--coral-50);
       color: var(--coral-600);
       border: 1px solid var(--coral-100);
-      padding: 0 0.85rem;
-      min-height: 2.65rem;
-      border-radius: 1rem;
-      font-size: 0.78rem;
+      padding: 0 0.8rem;
+      min-height: 2.45rem;
+      border-radius: 0.9rem;
+      font-size: 0.76rem;
       font-weight: 700;
       display: inline-flex;
       align-items: center;
@@ -557,9 +568,9 @@
       background: var(--coral-50);
       border: 1px solid var(--coral-100);
       color: var(--coral-600);
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-weight: 600;
-      padding: 0.55rem 0.8rem;
+      padding: 0.5rem 0.75rem;
       border-radius: 0.75rem;
     }
 
@@ -567,9 +578,9 @@
       background: var(--coral-50);
       border: 1px solid var(--coral-100);
       color: var(--coral-600);
-      border-radius: 0.55rem;
-      padding: 0.3rem 0.55rem;
-      font-size: 0.72rem;
+      border-radius: 0.5rem;
+      padding: 0.28rem 0.5rem;
+      font-size: 0.7rem;
       font-weight: 700;
       cursor: pointer;
       flex-shrink: 0;
@@ -579,9 +590,9 @@
     .filter-scroll {
       display: flex;
       align-items: center;
-      gap: 0.45rem;
+      gap: 0.4rem;
       overflow-x: auto;
-      padding-bottom: 0.2rem;
+      padding-bottom: 0.15rem;
       scrollbar-width: none;
     }
 
@@ -590,9 +601,9 @@
     }
 
     .filter-pill {
-      padding: 0.48rem 0.85rem;
+      padding: 0.44rem 0.8rem;
       border-radius: 9999px;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-weight: 700;
       white-space: nowrap;
       border: 1px solid var(--slate-200);
@@ -632,15 +643,15 @@
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 0.45rem;
       background: var(--white);
-      padding: 0.55rem 0.85rem;
-      border-radius: 1rem;
+      padding: 0.5rem 0.8rem;
+      border-radius: 0.9rem;
       border: 1px solid var(--slate-100);
     }
 
     .utility-hint {
-      font-size: 0.72rem;
+      font-size: 0.71rem;
       color: var(--slate-500);
       font-weight: 500;
     }
@@ -654,22 +665,22 @@
     .btn-reload-default {
       background: var(--ocean-50);
       border: 1px solid var(--ocean-200);
-      font-size: 0.72rem;
+      font-size: 0.71rem;
       font-weight: 700;
       color: var(--ocean-800);
-      padding: 0.35rem 0.6rem;
-      border-radius: 0.55rem;
+      padding: 0.32rem 0.55rem;
+      border-radius: 0.5rem;
       cursor: pointer;
     }
 
     .btn-reset {
       background: var(--coral-50);
       border: 1px solid var(--coral-100);
-      font-size: 0.72rem;
+      font-size: 0.71rem;
       font-weight: 700;
       color: var(--coral-600);
-      padding: 0.35rem 0.6rem;
-      border-radius: 0.55rem;
+      padding: 0.32rem 0.55rem;
+      border-radius: 0.5rem;
       cursor: pointer;
     }
 
@@ -683,7 +694,7 @@
     }
 
     .cat-header {
-      padding: 0.7rem 1rem;
+      padding: 0.65rem 0.95rem;
       background: linear-gradient(90deg, var(--slate-50) 0%, var(--white) 100%);
       border-bottom: 1px solid var(--slate-100);
       display: flex;
@@ -699,15 +710,15 @@
     }
 
     .cat-title {
-      font-size: 0.82rem;
+      font-size: 0.81rem;
       font-weight: 800;
       color: var(--slate-800);
     }
 
     .cat-badge {
-      font-size: 0.7rem;
+      font-size: 0.69rem;
       font-weight: 700;
-      padding: 0.18rem 0.6rem;
+      padding: 0.16rem 0.55rem;
       border-radius: 9999px;
       background: var(--ocean-50);
       color: var(--ocean-700);
@@ -719,10 +730,10 @@
     }
 
     .check-row {
-      padding: 0.75rem 1rem;
+      padding: 0.7rem 0.95rem;
       display: flex;
       align-items: flex-start;
-      gap: 0.75rem;
+      gap: 0.7rem;
       cursor: pointer;
       user-select: none;
       border-top: 1px solid var(--slate-100);
@@ -737,10 +748,10 @@
     }
 
     .checkbox-box {
-      margin-top: 0.1rem;
-      width: 1.35rem;
-      height: 1.35rem;
-      border-radius: 0.45rem;
+      margin-top: 0.08rem;
+      width: 1.3rem;
+      height: 1.3rem;
+      border-radius: 0.42rem;
       border: 2px solid var(--slate-300);
       background: var(--white);
       display: flex;
@@ -768,10 +779,10 @@
     }
 
     .item-name {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 600;
       color: var(--slate-800);
-      line-height: 1.35;
+      line-height: 1.32;
     }
 
     .check-row.checked .item-name {
@@ -780,29 +791,29 @@
     }
 
     .tag-optional {
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       font-weight: 800;
       text-transform: uppercase;
-      padding: 0.12rem 0.4rem;
+      padding: 0.1rem 0.38rem;
       border-radius: 0.3rem;
       background: var(--amber-100);
       color: var(--amber-800);
     }
 
     .tag-custom {
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       font-weight: 800;
       text-transform: uppercase;
-      padding: 0.12rem 0.4rem;
+      padding: 0.1rem 0.38rem;
       border-radius: 0.3rem;
       background: var(--purple-100);
       color: var(--purple-700);
     }
 
     .item-note {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--slate-500);
-      margin-top: 0.15rem;
+      margin-top: 0.12rem;
     }
 
     .check-row.checked .item-note {
@@ -814,25 +825,25 @@
       background: none;
       border: none;
       color: var(--slate-400);
-      padding: 0.4rem;
+      padding: 0.35rem;
       cursor: pointer;
       font-size: 0.85rem;
     }
 
     .btn-cta-copy {
       width: 100%;
-      padding: 0.9rem 1rem;
+      padding: 0.85rem 1rem;
       border-radius: 1rem;
       border: none;
       background: linear-gradient(90deg, var(--ocean-600) 0%, var(--sky-600) 100%);
       color: var(--white);
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 700;
       box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 0.45rem;
       cursor: pointer;
     }
 
@@ -841,12 +852,12 @@
       background: var(--white);
       border-radius: 1rem;
       border: 1px solid var(--slate-200);
-      padding: 1rem;
+      padding: 0.95rem;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
     }
 
     .section-card-title {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 800;
       color: var(--ocean-900);
       display: flex;
@@ -858,27 +869,27 @@
     }
 
     .section-card-sub {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--slate-500);
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.8rem;
     }
 
     .alarm-box {
-      margin-top: 0.9rem;
-      padding: 0.8rem 0.9rem;
+      margin-top: 0.85rem;
+      padding: 0.75rem 0.85rem;
       border-radius: 0.85rem;
       background: var(--ocean-50);
       border: 1px solid var(--ocean-100);
     }
 
     .alarm-title {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 800;
       color: var(--ocean-800);
     }
 
     .alarm-sub {
-      font-size: 0.74rem;
+      font-size: 0.73rem;
       color: var(--slate-600);
       margin-top: 0.2rem;
     }
@@ -887,19 +898,19 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.45rem;
-      margin-top: 0.6rem;
+      margin-top: 0.55rem;
     }
 
     .btn-alarm-primary,
     .btn-alarm-secondary {
-      flex: 1 1 10rem;
+      flex: 1 1 9.5rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 2.4rem;
-      padding: 0 0.8rem;
+      min-height: 2.3rem;
+      padding: 0 0.75rem;
       border-radius: 0.75rem;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
       cursor: pointer;
       text-decoration: none;
@@ -919,18 +930,18 @@
     }
 
     .alarm-note {
-      font-size: 0.7rem;
+      font-size: 0.69rem;
       color: var(--slate-500);
-      margin-top: 0.5rem;
+      margin-top: 0.45rem;
     }
 
     .inline-input {
       width: 100%;
-      padding: 0.5rem 0.65rem;
+      padding: 0.48rem 0.62rem;
       border-radius: 0.65rem;
       border: 1px solid var(--slate-200);
       background: var(--slate-50);
-      font-size: 0.8rem;
+      font-size: 0.79rem;
       color: var(--slate-800);
     }
 
@@ -950,7 +961,7 @@
     .data-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       text-align: left;
     }
 
@@ -958,13 +969,13 @@
       background: var(--ocean-800);
       color: var(--white);
       font-weight: 700;
-      padding: 0.6rem 0.65rem;
+      padding: 0.55rem 0.6rem;
       white-space: nowrap;
-      font-size: 0.72rem;
+      font-size: 0.71rem;
     }
 
     .data-table td {
-      padding: 0.55rem 0.65rem;
+      padding: 0.52rem 0.6rem;
       border-top: 1px solid var(--slate-100);
       vertical-align: middle;
     }
@@ -973,14 +984,14 @@
       background: var(--ocean-50);
       color: var(--ocean-900);
       font-weight: 800;
-      font-size: 0.75rem;
-      padding: 0.5rem 0.65rem;
+      font-size: 0.74rem;
+      padding: 0.46rem 0.6rem;
     }
 
     .toka-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 0.55rem;
+      gap: 0.5rem;
     }
 
     @media (min-width: 480px) {
@@ -993,27 +1004,27 @@
       background: var(--slate-50);
       border: 1px solid var(--slate-200);
       border-radius: 0.75rem;
-      padding: 0.65rem 0.75rem;
+      padding: 0.6rem 0.7rem;
     }
 
     .toka-dish {
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 800;
       color: var(--slate-800);
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.3rem;
     }
 
     .stat-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 0.55rem;
+      gap: 0.5rem;
     }
 
     .stat-box {
       background: var(--ocean-50);
       border: 1px solid var(--ocean-200);
       border-radius: 0.85rem;
-      padding: 0.7rem 0.8rem;
+      padding: 0.65rem 0.75rem;
     }
 
     .stat-box.amber {
@@ -1027,33 +1038,34 @@
     }
 
     .stat-label {
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       font-weight: 700;
       text-transform: uppercase;
       color: var(--slate-500);
     }
 
     .stat-val {
-      font-size: 1.02rem;
+      font-size: 0.98rem;
       font-weight: 800;
       color: var(--ocean-900);
-      margin-top: 0.15rem;
+      margin-top: 0.12rem;
     }
 
     .stat-sub {
-      font-size: 0.68rem;
+      font-size: 0.67rem;
       color: var(--slate-500);
-      margin-top: 0.1rem;
+      margin-top: 0.08rem;
     }
 
     .status-pill {
-      font-size: 0.66rem;
+      font-size: 0.65rem;
       font-weight: 800;
-      padding: 0.3rem 0.6rem;
+      padding: 0.26rem 0.55rem;
       border-radius: 9999px;
       border: none;
       cursor: pointer;
       white-space: nowrap;
+      display: inline-block;
     }
 
     .status-pill.paid {
@@ -1073,19 +1085,19 @@
 
     .trip-meta-table {
       width: 100%;
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       border-collapse: collapse;
     }
 
     .trip-meta-table td {
-      padding: 0.35rem 0;
+      padding: 0.32rem 0;
       vertical-align: top;
     }
 
     .trip-meta-table td:first-child {
       font-weight: 800;
       color: var(--ocean-800);
-      width: 6.2rem;
+      width: 6rem;
     }
 
     /* Sticky Bottom Navigation */
@@ -1106,8 +1118,8 @@
       margin: 0 auto;
       display: flex;
       align-items: center;
-      gap: 0.35rem;
-      padding: 0.45rem 0.65rem;
+      gap: 0.3rem;
+      padding: 0.42rem 0.6rem;
       overflow-x: auto;
       scrollbar-width: none;
     }
@@ -1121,13 +1133,13 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.2rem;
-      padding: 0.5rem 0.68rem;
-      border-radius: 0.9rem;
+      gap: 0.18rem;
+      padding: 0.45rem 0.62rem;
+      border-radius: 0.85rem;
       border: 1px solid transparent;
       background: transparent;
       color: var(--slate-500);
-      font-size: 0.69rem;
+      font-size: 0.68rem;
       font-weight: 700;
       white-space: nowrap;
       flex-shrink: 0;
@@ -1147,15 +1159,15 @@
 
     .nav-badge {
       position: absolute;
-      top: -0.35rem;
-      right: -0.65rem;
+      top: -0.32rem;
+      right: -0.6rem;
       background: var(--coral-500);
       color: var(--white);
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       font-weight: 800;
-      padding: 0.05rem 0.35rem;
+      padding: 0.04rem 0.32rem;
       border-radius: 9999px;
-      line-height: 1.3;
+      line-height: 1.25;
     }
 
     /* Modals */
@@ -1176,8 +1188,8 @@
       }
       .nav-btn {
         flex-direction: row;
-        gap: 0.45rem;
-        font-size: 0.8rem;
+        gap: 0.42rem;
+        font-size: 0.78rem;
       }
     }
 
@@ -1185,8 +1197,8 @@
       background: var(--white);
       width: 100%;
       max-width: 26rem;
-      border-radius: 1.5rem;
-      padding: 1.25rem;
+      border-radius: 1.35rem;
+      padding: 1.2rem;
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
     }
 
@@ -1194,33 +1206,33 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 1rem;
+      margin-bottom: 0.9rem;
     }
 
     .modal-title {
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 800;
       color: var(--slate-800);
     }
 
     .form-group {
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.8rem;
     }
 
     .form-label {
       display: block;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-weight: 700;
       color: var(--slate-700);
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.28rem;
     }
 
     .form-control {
       width: 100%;
-      padding: 0.65rem 0.85rem;
+      padding: 0.6rem 0.8rem;
       border-radius: 0.75rem;
       border: 1px solid var(--slate-200);
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       background: var(--white);
       color: var(--slate-800);
     }
@@ -1228,8 +1240,8 @@
     .checkbox-label {
       display: flex;
       align-items: center;
-      gap: 0.55rem;
-      font-size: 0.78rem;
+      gap: 0.5rem;
+      font-size: 0.76rem;
       font-weight: 600;
       color: var(--slate-600);
       cursor: pointer;
@@ -1239,38 +1251,38 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0.5rem;
-      margin-top: 1.1rem;
+      margin-top: 1rem;
     }
 
     .btn-modal-secondary {
-      padding: 0.7rem;
+      padding: 0.65rem;
       border-radius: 0.75rem;
       border: 1px solid var(--slate-200);
       background: var(--white);
       color: var(--slate-600);
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
       cursor: pointer;
     }
 
     .btn-modal-primary {
-      padding: 0.7rem;
+      padding: 0.65rem;
       border-radius: 0.75rem;
       border: none;
       background: var(--ocean-600);
       color: var(--white);
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
       cursor: pointer;
     }
 
     .btn-modal-danger {
-      padding: 0.7rem;
+      padding: 0.65rem;
       border-radius: 0.75rem;
       border: none;
       background: var(--coral-600);
       color: var(--white);
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
       cursor: pointer;
     }
@@ -1286,15 +1298,15 @@
     /* Toast */
     .toast {
       position: fixed;
-      top: 5.2rem;
+      top: 5rem;
       left: 50%;
       transform: translate(-50%, 0.5rem);
       z-index: 60;
       background: rgba(15, 23, 42, 0.95);
       color: var(--white);
-      padding: 0.65rem 1rem;
+      padding: 0.6rem 0.95rem;
       border-radius: 9999px;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 700;
       display: flex;
       align-items: center;
@@ -1313,8 +1325,8 @@
     }
 
     .toast-dot {
-      width: 0.5rem;
-      height: 0.5rem;
+      width: 0.48rem;
+      height: 0.48rem;
       border-radius: 9999px;
       background: #34d399;
       flex-shrink: 0;
@@ -1324,13 +1336,15 @@
 <body>
 
   <!-- Sticky Top Header -->
-  <div class="header-top">
+  <header class="app-header">
+    <div class="container header-inner">
+      <div class="header-top">
         <div class="header-actions-row">
           <div class="trip-badge">
-            <span>☀️ DEC 5–6, 2026 • HUGOM BEACH, BATANGAS</span>
+            <span>☀️ DEC 5–6, 2026 • HUGOM BEACH</span>
           </div>
           <div class="pill-group" style="flex-shrink: 0;">
-            <button type="button" onclick="reloadAllDefaultData()" class="btn-header-copy" style="background: rgba(255,255,255,0.18); color: var(--white);" title="Reload Default Data">
+            <button type="button" onclick="reloadAllDefaultData()" class="btn-header-copy" style="background: rgba(255,255,255,0.2); color: var(--white);" title="Reload Default Data">
               <span>↺ Defaults</span>
             </button>
             <button type="button" onclick="copyUncheckedToClipboard()" class="btn-header-copy" title="Copy remaining items for GC">
@@ -1762,7 +1776,7 @@
     // Fresh versioned storage key so stale/empty data never hides items
     const STORAGE_KEY = "ka_lucena_outing_v10";
 
-    // ==================== DEFAULT MENU DATA (NO FRUIT SALAD, NO SINIGANG) ====================
+    // ==================== DEFAULT MENU DATA ====================
     const DEFAULT_MENU_DATA = [
       {
         dayId: "day-1",
@@ -1945,7 +1959,7 @@
       }
     ];
 
-    // ==================== DEFAULT PALENGKE CATEGORIES (NO FRUIT SALAD, NO SINIGANG NA SALMON) ====================
+    // ==================== DEFAULT PALENGKE CATEGORIES ====================
     const DEFAULT_CATEGORIES = [
       {
         id: "karne",
@@ -2085,7 +2099,7 @@
       { id: "td-12", dish: "Itlog na maalat na may kamatis at talong", cook: "" }
     ];
 
-    // ==================== DEFAULT PRESYO GUIDE (NO FRUIT SALAD, NO SINIGANG) ====================
+    // ==================== DEFAULT PRESYO GUIDE ====================
     const DEFAULT_PRICES = [
       { id: "pr-1", item: "Pork Liempo (kg)", qty: 4, unitPrice: 380 },
       { id: "pr-2", item: "Pork Belly - Kimchi Jiggae (kg)", qty: 1, unitPrice: 390 },
@@ -2104,7 +2118,7 @@
       { id: "pr-15", item: "Gulay, Aromatics, Staples, Uling & Dahon", qty: 1, unitPrice: 1170 }
     ];
 
-    // ==================== DEFAULT AMBAGAN & BUDGET (FREE / KID, PAID, UNPAID) ====================
+    // ==================== DEFAULT AMBAGAN & BUDGET ====================
     const REQUIRED_CONTRIBUTION = 2250;
 
     function computeMemberStatus(amount, isKid) {
@@ -2687,7 +2701,8 @@
         lines.push("🎉 Kumpleto na lahat ng nasa palengke checklist!");
       }
 
-      copyTextFallback(lines.join("\n").trim(), "Copied Palengke List para sa GC!");
+      copyTextFallback(lines.join("
+").trim(), "Copied Palengke List para sa GC!");
     }
 
     // ==================== TAB 3: ITINERARY & TOKA ====================
@@ -2745,7 +2760,6 @@
     }
 
     // ==================== MAMALENGKE ALARM ====================
-    // Philippine time (Asia/Manila, UTC+8, no daylight saving)
     const MARKET_DATE = { y: 2026, m: 12, d: 4 };
     const MANILA_OFFSET_HOURS = 8;
 
@@ -2766,17 +2780,19 @@
     }
 
     function icsEscape(str) {
-      return String(str || "").replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n");
+      return String(str || "").replace(/\/g, "\\").replace(/;/g, "\;").replace(/,/g, "\,").replace(/
+?
+/g, "\n");
     }
 
     function getMarketEventDetails() {
       const who = marketTeam.morning ? `Mamalengke: ${marketTeam.morning}` : "Mamalengke: TBA";
       const notes = marketTeam.notes ? `Notes: ${marketTeam.notes}` : "";
-      return [who, notes, "Dalhin ang Palengke List!"].filter(Boolean).join("\n");
+      return [who, notes, "Dalhin ang Palengke List!"].filter(Boolean).join("
+");
     }
 
     function getNightBeforeMinutes(start) {
-      // Minutes between 9:00 PM (Manila) the night before and the start time
       const nightBefore = new Date(Date.UTC(MARKET_DATE.y, MARKET_DATE.m - 1, MARKET_DATE.d - 1, 21 - MANILA_OFFSET_HOURS, 0));
       return Math.round((start - nightBefore) / 60000);
     }
@@ -2832,7 +2848,8 @@
         "END:VEVENT",
         "END:VCALENDAR"
       ];
-      const blob = new Blob([lines.join("\r\n")], { type: "text/calendar;charset=utf-8" });
+      const blob = new Blob([lines.join("
+")], { type: "text/calendar;charset=utf-8" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -2866,7 +2883,8 @@
         lines.push(`• ${d.dish}: ${d.cook || "TBA"}`);
       });
 
-      copyTextFallback(lines.join("\n"), "Copied Itinerary & Toka para sa GC!");
+      copyTextFallback(lines.join("
+"), "Copied Itinerary & Toka para sa GC!");
     }
 
     // ==================== TAB 4: PRESYO GUIDE ====================
@@ -3029,15 +3047,6 @@
       }
     }
 
-    function cycleMemberStatus(id) {
-      const m = membersLedger.find(x => x.id === id);
-      if (!m) return;
-      const order = ["paid", "unpaid", "free"];
-      m.status = order[(order.indexOf(m.status) + 1) % order.length];
-      saveAllState();
-      renderAmbaganTab();
-    }
-
     function updateAllocationAmount(id, value) {
       const a = budgetAllocation.find(x => x.id === id);
       if (a) {
@@ -3134,7 +3143,8 @@
         ...budgetAllocation.map(a => `• ${a.category}: ${formatPeso(a.amount)}`),
         `TOTAL BUDGET: ${formatPeso(totalBudget)}`
       ];
-      copyTextFallback(lines.join("\n"), "Copied Ambagan & Budget para sa GC!");
+      copyTextFallback(lines.join("
+"), "Copied Ambagan & Budget para sa GC!");
     }
 
     // ==================== TAB NAVIGATION ====================
