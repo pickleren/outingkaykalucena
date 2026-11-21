@@ -1,0 +1,2901 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+  <!-- Viewport & mobile-first metadata without external CDN dependencies -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>PA-OUTING NI KA LUCENA • Outing &amp; Food Hub</title>
+  <style>
+    /* Design tokens for ocean/beachside outing theme */
+    :root {
+      --ocean-50: #f0fdfa;
+      --ocean-100: #ccfbf1;
+      --ocean-200: #99f6e4;
+      --ocean-500: #14b8a6;
+      --ocean-600: #0d9488;
+      --ocean-700: #0f766e;
+      --ocean-800: #115e59;
+      --ocean-900: #134e4a;
+      --sky-500: #0ea5e9;
+      --sky-600: #0284c7;
+      --sand-50: #fdfbf7;
+      --sand-100: #f7f2e8;
+      --coral-50: #fff1f2;
+      --coral-100: #ffe4e6;
+      --coral-500: #f43f5e;
+      --coral-600: #e11d48;
+      --amber-50: #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-200: #fde68a;
+      --amber-400: #fbbf24;
+      --amber-500: #f59e0b;
+      --amber-700: #b45309;
+      --amber-800: #92400e;
+      --emerald-100: #d1fae5;
+      --emerald-700: #047857;
+      --purple-100: #f3e8ff;
+      --purple-700: #7e22ce;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--sand-50);
+      color: var(--slate-800);
+      line-height: 1.5;
+      min-height: 100vh;
+      padding-bottom: 6.5rem;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select, td, th, .stat-val, .stat-sub, .progress-count, .cat-badge, .course-count-badge, .status-pill {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Sticky Top Header */
+    .app-header {
+      background: linear-gradient(135deg, var(--ocean-700) 0%, var(--sky-600) 65%, var(--sky-500) 100%);
+      color: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      box-shadow: 0 4px 14px rgba(15, 118, 110, 0.18);
+      border-bottom-left-radius: 1.5rem;
+      border-bottom-right-radius: 1.5rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 42rem;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .header-inner {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .trip-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--ocean-50);
+      margin-bottom: 0.3rem;
+    }
+
+    .app-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .app-subtitle {
+      font-size: 0.76rem;
+      color: #cffafe;
+      font-weight: 500;
+      margin-top: 0.15rem;
+    }
+
+    .btn-header-copy {
+      flex-shrink: 0;
+      background: var(--white);
+      color: var(--ocean-800);
+      border: none;
+      padding: 0.6rem 0.85rem;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: pointer;
+    }
+
+    .btn-header-copy:active {
+      transform: scale(0.96);
+    }
+
+    /* Progress Bar Card */
+    .progress-box {
+      margin-top: 0.8rem;
+      background: rgba(0, 0, 0, 0.22);
+      border-radius: 1rem;
+      padding: 0.65rem 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .progress-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.74rem;
+      font-weight: 600;
+      margin-bottom: 0.38rem;
+      gap: 0.5rem;
+    }
+
+    .progress-count {
+      color: #fde68a;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .progress-track {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.22);
+      border-radius: 9999px;
+      height: 0.52rem;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #fcd34d 0%, #6ee7b7 50%, #99f6e4 100%);
+      border-radius: 9999px;
+      transition: width 0.3s ease;
+    }
+
+    /* Main Layout */
+    .main-content {
+      padding-top: 1rem;
+    }
+
+    .stack-md > * + * {
+      margin-top: 1rem;
+    }
+
+    .stack-sm > * + * {
+      margin-top: 0.75rem;
+    }
+
+    /* Day Quick Jump & Collapse Controls */
+    .controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .pill-group {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-day-pill {
+      padding: 0.5rem 0.8rem;
+      border-radius: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border: 1px solid var(--ocean-200);
+      background: var(--white);
+      color: var(--ocean-700);
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    .btn-day-pill.active,
+    .btn-day-pill:active {
+      background: var(--ocean-600);
+      color: var(--white);
+      border-color: var(--ocean-600);
+    }
+
+    .btn-text-link {
+      background: none;
+      border: none;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--ocean-700);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      padding: 0.4rem 0.5rem;
+      cursor: pointer;
+    }
+
+    /* Day Sections & Meal Cards */
+    .day-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 0.25rem;
+      margin-bottom: 0.65rem;
+      gap: 0.5rem;
+    }
+
+    .day-title {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--ocean-900);
+    }
+
+    .day-sub {
+      font-size: 0.75rem;
+      color: var(--slate-500);
+      font-weight: 500;
+    }
+
+    .course-count-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      background: var(--ocean-100);
+      color: var(--ocean-800);
+      white-space: nowrap;
+    }
+
+    .meal-card {
+      background: var(--white);
+      border-radius: 1rem;
+      border: 1px solid var(--slate-200);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      overflow: hidden;
+    }
+
+    .meal-card-btn {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      text-align: left;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .meal-card-btn:active {
+      background: var(--slate-50);
+    }
+
+    .meal-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-width: 0;
+    }
+
+    .meal-emoji {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.75rem;
+      background: var(--sand-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+    }
+
+    .meal-title-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .meal-type {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--slate-800);
+    }
+
+    .meal-summary-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--ocean-700);
+      background: var(--ocean-50);
+      padding: 0.15rem 0.45rem;
+      border-radius: 0.375rem;
+    }
+
+    .meal-note {
+      font-size: 0.75rem;
+      color: var(--slate-500);
+      margin-top: 0.15rem;
+    }
+
+    .chevron-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      color: var(--slate-400);
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    .chevron-icon.rotated {
+      transform: rotate(180deg);
+    }
+
+    .meal-body {
+      padding: 0.75rem 1rem 1rem;
+      border-top: 1px solid var(--slate-100);
+      background: rgba(248, 250, 252, 0.65);
+    }
+
+    .dish-box {
+      background: var(--white);
+      border-radius: 0.75rem;
+      padding: 0.75rem;
+      border: 1px solid var(--slate-100);
+    }
+
+    .dish-box + .dish-box {
+      margin-top: 0.65rem;
+    }
+
+    .dish-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.45rem;
+    }
+
+    .dish-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--slate-800);
+    }
+
+    .dish-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.18rem 0.55rem;
+      border-radius: 9999px;
+    }
+
+    .dish-badge.coral {
+      background: var(--coral-50);
+      color: var(--coral-600);
+      border: 1px solid var(--coral-100);
+    }
+
+    .dish-badge.amber {
+      background: var(--amber-50);
+      color: var(--amber-700);
+      border: 1px solid var(--amber-200);
+    }
+
+    .dish-list {
+      list-style: none;
+      font-size: 0.78rem;
+      color: var(--slate-600);
+      line-height: 1.48;
+    }
+
+    .dish-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+
+    .dish-list li + li {
+      margin-top: 0.35rem;
+    }
+
+    .bullet-dot {
+      color: var(--ocean-500);
+      font-weight: 800;
+    }
+
+    /* Checklist Controls */
+    .search-add-row {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .search-icon {
+      width: 1rem;
+      height: 1rem;
+      color: var(--slate-400);
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.68rem 2rem 0.68rem 2.3rem;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 1rem;
+      font-size: 0.85rem;
+      color: var(--slate-800);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--ocean-500);
+    }
+
+    .btn-clear-search {
+      position: absolute;
+      right: 0.6rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--slate-400);
+      font-size: 0.85rem;
+      padding: 0.3rem;
+      cursor: pointer;
+    }
+
+    .btn-add-item {
+      background: var(--ocean-600);
+      color: var(--white);
+      border: none;
+      padding: 0 0.95rem;
+      min-height: 2.65rem;
+      border-radius: 1rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(13, 148, 136, 0.25);
+      flex-shrink: 0;
+    }
+
+    .filter-scroll {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      overflow-x: auto;
+      padding-bottom: 0.2rem;
+      scrollbar-width: none;
+    }
+
+    .filter-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-pill {
+      padding: 0.48rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      white-space: nowrap;
+      border: 1px solid var(--slate-200);
+      background: var(--white);
+      color: var(--slate-600);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .filter-pill.active {
+      background: var(--ocean-700);
+      color: var(--white);
+      border-color: var(--ocean-700);
+    }
+
+    .filter-pill.optional-active {
+      background: var(--amber-500);
+      color: var(--white);
+      border-color: var(--amber-500);
+    }
+
+    .opt-dot {
+      display: inline-block;
+      width: 0.45rem;
+      height: 0.45rem;
+      border-radius: 9999px;
+      background: var(--amber-400);
+      margin-right: 0.3rem;
+    }
+
+    .filter-pill.optional-active .opt-dot {
+      background: var(--white);
+    }
+
+    .utility-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      background: var(--white);
+      padding: 0.55rem 0.85rem;
+      border-radius: 1rem;
+      border: 1px solid var(--slate-100);
+    }
+
+    .utility-hint {
+      font-size: 0.72rem;
+      color: var(--slate-500);
+      font-weight: 500;
+    }
+
+    .utility-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-reload-default {
+      background: var(--ocean-50);
+      border: 1px solid var(--ocean-200);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--ocean-800);
+      padding: 0.35rem 0.6rem;
+      border-radius: 0.55rem;
+      cursor: pointer;
+    }
+
+    .btn-reset {
+      background: var(--coral-50);
+      border: 1px solid var(--coral-100);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--coral-600);
+      padding: 0.35rem 0.6rem;
+      border-radius: 0.55rem;
+      cursor: pointer;
+    }
+
+    /* Category Cards */
+    .cat-card {
+      background: var(--white);
+      border-radius: 1rem;
+      border: 1px solid var(--slate-200);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      overflow: hidden;
+    }
+
+    .cat-header {
+      padding: 0.7rem 1rem;
+      background: linear-gradient(90deg, var(--slate-50) 0%, var(--white) 100%);
+      border-bottom: 1px solid var(--slate-100);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .cat-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .cat-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--slate-800);
+    }
+
+    .cat-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.18rem 0.6rem;
+      border-radius: 9999px;
+      background: var(--ocean-50);
+      color: var(--ocean-700);
+    }
+
+    .cat-badge.complete {
+      background: var(--emerald-100);
+      color: var(--emerald-700);
+    }
+
+    .check-row {
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      cursor: pointer;
+      user-select: none;
+      border-top: 1px solid var(--slate-100);
+    }
+
+    .check-row:first-child {
+      border-top: none;
+    }
+
+    .check-row.checked {
+      background: rgba(248, 250, 252, 0.75);
+    }
+
+    .checkbox-box {
+      margin-top: 0.1rem;
+      width: 1.35rem;
+      height: 1.35rem;
+      border-radius: 0.45rem;
+      border: 2px solid var(--slate-300);
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .check-row.checked .checkbox-box {
+      background: var(--ocean-600);
+      border-color: var(--ocean-600);
+      color: var(--white);
+    }
+
+    .item-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item-top {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .item-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--slate-800);
+      line-height: 1.35;
+    }
+
+    .check-row.checked .item-name {
+      text-decoration: line-through;
+      color: var(--slate-400);
+    }
+
+    .tag-optional {
+      font-size: 0.62rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 0.12rem 0.4rem;
+      border-radius: 0.3rem;
+      background: var(--amber-100);
+      color: var(--amber-800);
+    }
+
+    .tag-custom {
+      font-size: 0.62rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 0.12rem 0.4rem;
+      border-radius: 0.3rem;
+      background: var(--purple-100);
+      color: var(--purple-700);
+    }
+
+    .item-note {
+      font-size: 0.75rem;
+      color: var(--slate-500);
+      margin-top: 0.15rem;
+    }
+
+    .check-row.checked .item-note {
+      text-decoration: line-through;
+      color: var(--slate-400);
+    }
+
+    .btn-delete-custom {
+      background: none;
+      border: none;
+      color: var(--slate-400);
+      padding: 0.4rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .btn-cta-copy {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border-radius: 1rem;
+      border: none;
+      background: linear-gradient(90deg, var(--ocean-600) 0%, var(--sky-600) 100%);
+      color: var(--white);
+      font-size: 0.88rem;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    /* Section Cards & Tables (Tabs 3, 4, 5) */
+    .section-card {
+      background: var(--white);
+      border-radius: 1rem;
+      border: 1px solid var(--slate-200);
+      padding: 1rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+
+    .section-card-title {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--ocean-900);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+      flex-wrap: wrap;
+    }
+
+    .section-card-sub {
+      font-size: 0.75rem;
+      color: var(--slate-500);
+      margin-bottom: 0.85rem;
+    }
+
+    .inline-input {
+      width: 100%;
+      padding: 0.5rem 0.65rem;
+      border-radius: 0.65rem;
+      border: 1px solid var(--slate-200);
+      background: var(--slate-50);
+      font-size: 0.8rem;
+      color: var(--slate-800);
+    }
+
+    .inline-input:focus {
+      outline: none;
+      border-color: var(--ocean-500);
+      background: var(--white);
+    }
+
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--slate-200);
+      border-radius: 0.85rem;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: var(--ocean-800);
+      color: var(--white);
+      font-weight: 700;
+      padding: 0.6rem 0.65rem;
+      white-space: nowrap;
+      font-size: 0.72rem;
+    }
+
+    .data-table td {
+      padding: 0.55rem 0.65rem;
+      border-top: 1px solid var(--slate-100);
+      vertical-align: middle;
+    }
+
+    .data-table tr.day-divider td {
+      background: var(--ocean-50);
+      color: var(--ocean-900);
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 0.5rem 0.65rem;
+    }
+
+    .toka-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.55rem;
+    }
+
+    @media (min-width: 480px) {
+      .toka-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .toka-item {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 0.75rem;
+      padding: 0.65rem 0.75rem;
+    }
+
+    .toka-dish {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--slate-800);
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.55rem;
+    }
+
+    .stat-box {
+      background: var(--ocean-50);
+      border: 1px solid var(--ocean-200);
+      border-radius: 0.85rem;
+      padding: 0.7rem 0.8rem;
+    }
+
+    .stat-box.amber {
+      background: var(--amber-50);
+      border-color: var(--amber-200);
+    }
+
+    .stat-box.coral {
+      background: var(--coral-50);
+      border-color: var(--coral-100);
+    }
+
+    .stat-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--slate-500);
+    }
+
+    .stat-val {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--ocean-900);
+      margin-top: 0.15rem;
+    }
+
+    .stat-sub {
+      font-size: 0.68rem;
+      color: var(--slate-500);
+      margin-top: 0.1rem;
+    }
+
+    .status-pill {
+      font-size: 0.66rem;
+      font-weight: 800;
+      padding: 0.3rem 0.6rem;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .status-pill.paid {
+      background: var(--emerald-100);
+      color: var(--emerald-700);
+    }
+
+    .status-pill.unpaid {
+      background: var(--coral-100);
+      color: var(--coral-600);
+    }
+
+    .status-pill.free {
+      background: var(--slate-200);
+      color: var(--slate-600);
+    }
+
+    .trip-meta-table {
+      width: 100%;
+      font-size: 0.78rem;
+      border-collapse: collapse;
+    }
+
+    .trip-meta-table td {
+      padding: 0.35rem 0;
+      vertical-align: top;
+    }
+
+    .trip-meta-table td:first-child {
+      font-weight: 800;
+      color: var(--ocean-800);
+      width: 6.2rem;
+    }
+
+    /* Sticky Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 30;
+      background: rgba(255, 255, 255, 0.98);
+      border-top: 1px solid var(--slate-200);
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-scroll {
+      max-width: 42rem;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.65rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.2rem;
+      padding: 0.5rem 0.68rem;
+      border-radius: 0.9rem;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--slate-500);
+      font-size: 0.69rem;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .nav-btn.active {
+      background: var(--ocean-50);
+      color: var(--ocean-700);
+      border-color: var(--ocean-200);
+    }
+
+    .nav-icon-wrap {
+      position: relative;
+      display: inline-flex;
+    }
+
+    .nav-badge {
+      position: absolute;
+      top: -0.35rem;
+      right: -0.65rem;
+      background: var(--coral-500);
+      color: var(--white);
+      font-size: 0.6rem;
+      font-weight: 800;
+      padding: 0.05rem 0.35rem;
+      border-radius: 9999px;
+      line-height: 1.3;
+    }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(15, 23, 42, 0.55);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .modal-backdrop {
+        align-items: center;
+      }
+      .nav-btn {
+        flex-direction: row;
+        gap: 0.45rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    .modal-card {
+      background: var(--white);
+      width: 100%;
+      max-width: 26rem;
+      border-radius: 1.5rem;
+      padding: 1.25rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .modal-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--slate-800);
+    }
+
+    .form-group {
+      margin-bottom: 0.85rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--slate-700);
+      margin-bottom: 0.3rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--slate-200);
+      font-size: 0.85rem;
+      background: var(--white);
+      color: var(--slate-800);
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--slate-600);
+      cursor: pointer;
+    }
+
+    .modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-top: 1.1rem;
+    }
+
+    .btn-modal-secondary {
+      padding: 0.7rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--slate-200);
+      background: var(--white);
+      color: var(--slate-600);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-modal-primary {
+      padding: 0.7rem;
+      border-radius: 0.75rem;
+      border: none;
+      background: var(--ocean-600);
+      color: var(--white);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-modal-danger {
+      padding: 0.7rem;
+      border-radius: 0.75rem;
+      border: none;
+      background: var(--coral-600);
+      color: var(--white);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .empty-state {
+      background: var(--white);
+      border-radius: 1rem;
+      border: 1px solid var(--slate-200);
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 5.2rem;
+      left: 50%;
+      transform: translate(-50%, 0.5rem);
+      z-index: 60;
+      background: rgba(15, 23, 42, 0.95);
+      color: var(--white);
+      padding: 0.65rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      max-width: 92vw;
+      text-align: center;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .toast-dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 9999px;
+      background: #34d399;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Top Header -->
+  <header class="app-header">
+    <div class="container header-inner">
+      <div class="header-top">
+        <div>
+          <div class="trip-badge">
+            <span>☀️ DEC 5–6, 2026 • HUGOM BEACH, BATANGAS</span>
+          </div>
+          <h1 class="app-title">PA-OUTING NI KA LUCENA</h1>
+          <p class="app-subtitle">At Hugom Beach, Batangas (2nd Floor, Beachfront) • Dec 5–6, 2026 • 16 Pax (Including the driver)</p>
+        </div>
+        <div class="pill-group" style="flex-shrink: 0;">
+          <button type="button" onclick="reloadAllDefaultData()" class="btn-header-copy" style="background: rgba(255,255,255,0.18); color: var(--white);" title="Reload v9 Default Data">
+            <span>↺ Defaults</span>
+          </button>
+          <button type="button" onclick="copyUncheckedToClipboard()" class="btn-header-copy" title="Copy remaining items for GC">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span>Copy List</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Palengke Progress Bar -->
+      <div class="progress-box">
+        <div class="progress-meta">
+          <span>🛒 Palengke Progress</span>
+          <span id="progress-label" class="progress-count">0 / 0 items checked (0%)</span>
+        </div>
+        <div class="progress-track">
+          <div id="progress-bar" class="progress-fill"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container main-content">
+
+    <!-- ==================== TAB 1: MENU & REKADO ==================== -->
+    <section id="tab-menu" class="stack-md">
+      <div class="controls-row">
+        <div class="pill-group">
+          <button type="button" id="pill-day-all" onclick="filterMenuDay('all')" class="btn-day-pill active">All Days</button>
+          <button type="button" id="pill-day-1" onclick="filterMenuDay('day-1')" class="btn-day-pill">Day 1 (Dec 5)</button>
+          <button type="button" id="pill-day-2" onclick="filterMenuDay('day-2')" class="btn-day-pill">Day 2 (Dec 6)</button>
+        </div>
+        <div class="pill-group">
+          <button type="button" onclick="reloadAllDefaultData()" class="btn-text-link">Reload Default Data</button>
+          <button type="button" id="toggle-all-meals-btn" onclick="toggleAllMeals()" class="btn-text-link">Collapse All</button>
+        </div>
+      </div>
+
+      <div id="menu-container" class="stack-md"></div>
+    </section>
+
+    <!-- ==================== TAB 2: PALENGKE LIST ==================== -->
+    <section id="tab-checklist" class="hidden stack-sm">
+      <div class="search-add-row">
+        <div class="search-wrapper">
+          <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input
+            type="text"
+            id="search-input"
+            oninput="handleSearch(this.value)"
+            placeholder="Hanap rekado (ex. liempo, tokwa, lollipop)..."
+            class="search-input"
+          />
+          <button type="button" id="clear-search-btn" onclick="clearSearch()" class="btn-clear-search hidden" aria-label="Clear search">✕</button>
+        </div>
+        <button type="button" onclick="openAddModal()" class="btn-add-item">
+          <span>+ Add Item</span>
+        </button>
+      </div>
+
+      <div class="filter-scroll">
+        <button type="button" onclick="setFilter('all')" id="filter-all" class="filter-pill active">All</button>
+        <button type="button" onclick="setFilter('unchecked')" id="filter-unchecked" class="filter-pill">Unchecked</button>
+        <button type="button" onclick="setFilter('checked')" id="filter-checked" class="filter-pill">Checked</button>
+        <button type="button" onclick="toggleHideOptional()" id="filter-optional" class="filter-pill">
+          <span class="opt-dot"></span>
+          <span id="optional-label">Hide Optional</span>
+        </button>
+      </div>
+
+      <div class="utility-bar">
+        <span class="utility-hint">Tap item to check off • Auto-saved (v10)</span>
+        <div class="utility-actions">
+          <button type="button" onclick="reloadAllDefaultData()" class="btn-reload-default">Reload Default Data</button>
+          <button type="button" onclick="openResetModal()" class="btn-reset">Reset Checks</button>
+        </div>
+      </div>
+
+      <div id="checklist-container" class="stack-sm"></div>
+
+      <div style="padding-top: 0.5rem;">
+        <button type="button" onclick="copyUncheckedToClipboard()" class="btn-cta-copy">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span>Copy Unchecked List para sa GC</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: ITINERARY & TOKA ==================== -->
+    <section id="tab-itinerary" class="hidden stack-md">
+      <div class="section-card">
+        <div class="section-card-title">
+          <span>🛒 Mamalengke — Friday (Dec. 4)</span>
+          <button type="button" onclick="reloadAllDefaultData()" class="btn-text-link">Reload Default Data</button>
+        </div>
+        <p class="section-card-sub">I-edit kung sino ang mamalengke sa Morning o Afternoon at ang notes para sa Friday (Dec. 4).</p>
+
+        <div class="stack-sm">
+          <div>
+            <label class="form-label" for="market-morning">🌅 Morning Mamalengke (Friday, Dec. 4 AM)</label>
+            <input type="text" id="market-morning" oninput="updateMarketTeam('morning', this.value)" class="inline-input" placeholder="Ilagay ang pangalan ng mamalengke sa umaga..." />
+          </div>
+          <div>
+            <label class="form-label" for="market-afternoon">🌇 Afternoon Mamalengke (Friday, Dec. 4 PM)</label>
+            <input type="text" id="market-afternoon" oninput="updateMarketTeam('afternoon', this.value)" class="inline-input" placeholder="Ilagay ang pangalan ng mamalengke sa hapon..." />
+          </div>
+          <div>
+            <label class="form-label" for="market-notes">📝 Notes / Reminders (Dec. 4)</label>
+            <input type="text" id="market-notes" oninput="updateMarketTeam('notes', this.value)" class="inline-input" placeholder="Hal. Karne, isda, at groceries..." />
+          </div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-card-title">
+          <span>🗓️ Outing Itinerary (Dec. 5 – Dec. 6)</span>
+          <button type="button" onclick="copyItineraryToClipboard()" class="btn-text-link" style="text-decoration:none;">📋 Copy</button>
+        </div>
+        <p class="section-card-sub">I-edit ang column na <strong>Naka-toka / Magluluto</strong> sa bawat schedule row.</p>
+
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Activity Notes</th>
+                <th style="min-width: 9.5rem;">Naka-toka / Magluluto</th>
+              </tr>
+            </thead>
+            <tbody id="itinerary-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-card-title">
+          <span>👨‍🍳 Toka per Putahe</span>
+          <span class="course-count-badge">Editable</span>
+        </div>
+        <p class="section-card-sub">I-edit kung sino ang naka-assign magluto o mag-asikaso ng bawat putahe.</p>
+        <div id="toka-dishes-grid" class="toka-grid"></div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 4: PRESYO GUIDE ==================== -->
+    <section id="tab-presyo" class="hidden stack-md">
+      <div class="section-card">
+        <div class="section-card-title">
+          <span>🏷️ Presyo Guide (Estimated)</span>
+          <button type="button" onclick="reloadAllDefaultData()" class="btn-text-link">Reload Default Data</button>
+        </div>
+        <p class="section-card-sub">I-edit ang amount ng bawat member (automatic <strong>PAID</strong> kapag ≥ ₱2,250, <strong>UNPAID</strong> kapag &lt; ₱2,250).</p>
+
+        <div class="stat-grid" style="margin-bottom: 0.85rem;">
+          <div class="stat-box">
+            <div class="stat-label">Est. Total Food Cost</div>
+            <div id="price-total-est" class="stat-val">₱0</div>
+            <div class="stat-sub">Auto-calculated (Qty × Unit)</div>
+          </div>
+          <div class="stat-box amber">
+            <div class="stat-label">Per-Head (13 Paying Adults)</div>
+            <div id="price-per-adult" class="stat-val">₱0 / adult</div>
+            <div id="price-vs-budget" class="stat-sub">vs ₱4,000 Foods Budget</div>
+          </div>
+        </div>
+
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th style="width: 4.5rem; text-align: right;">Qty</th>
+                <th style="width: 5.5rem; text-align: right;">Unit (₱)</th>
+                <th style="width: 5.5rem; text-align: right;">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody id="price-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 5: AMBAGAN & BUDGET ==================== -->
+    <section id="tab-ambagan" class="hidden stack-md">
+      <div class="section-card" style="background: linear-gradient(135deg, var(--ocean-50) 0%, var(--white) 100%); border-color: var(--ocean-200);">
+        <div class="section-card-title">
+          <span>🏖️ PA-OUTING NI KA LUCENA • TRIP SUMMARY</span>
+          <button type="button" onclick="reloadAllDefaultData()" class="btn-text-link">Reload Default Data</button>
+        </div>
+        <table class="trip-meta-table" style="margin-top: 0.4rem;">
+          <tr>
+            <td>WHEN:</td>
+            <td><strong>IN:</strong> Dec 05, 2026 / 6:00 am<br><strong>OUT:</strong> Dec 06, 2026 / 5:00 pm</td>
+          </tr>
+          <tr>
+            <td>WHERE:</td>
+            <td>At Hugom Beach, Batangas - 2nd Floor, Beachfront</td>
+          </tr>
+          <tr>
+            <td>NO. OF PAX:</td>
+            <td>16 Including the driver</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section-card">
+        <div class="section-card-title">
+          <span>💸 Member Ledger &amp; Contributions</span>
+          <button type="button" onclick="openMemberModal()" class="btn-add-item" style="padding: 0.35rem 0.7rem; min-height: 2rem; border-radius: 0.65rem;">+ Member</button>
+        </div>
+        <p class="section-card-sub">I-edit ang amount ng bawat member o i-tap ang status badge para mag-update.</p>
+
+        <div class="stat-grid" style="margin-bottom: 0.85rem;">
+          <div class="stat-box">
+            <div class="stat-label">Total Collected</div>
+            <div id="contrib-total-ledger" class="stat-val">₱26,000</div>
+            <div id="contrib-paid-actual" class="stat-sub">Paid Status Total: ₱26,000</div>
+          </div>
+          <div id="contrib-variance-box" class="stat-box">
+            <div class="stat-label">Variance vs. Total Budget</div>
+            <div id="contrib-variance-val" class="stat-val">₱0</div>
+            <div id="contrib-variance-sub" class="stat-sub">Balanced: ₱0 kulang/sobra</div>
+          </div>
+        </div>
+
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Member Name</th>
+                <th>Status</th>
+                <th style="width: 6.5rem; text-align: right;">Amount (₱)</th>
+              </tr>
+            </thead>
+            <tbody id="members-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-card-title">
+          <span>📊 Budget Allocation</span>
+          <button type="button" onclick="copyAmbaganToClipboard()" class="btn-text-link" style="text-decoration:none;">📋 Copy Summary</button>
+        </div>
+        <p class="section-card-sub">Editable budget allocation per category.</p>
+
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th style="width: 7.5rem; text-align: right;">Amount (₱)</th>
+              </tr>
+            </thead>
+            <tbody id="allocation-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Sticky Bottom Tab Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-scroll">
+      <button type="button" id="nav-menu" onclick="switchTab('menu')" class="nav-btn active">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        <span>Menu &amp; Rekado</span>
+      </button>
+
+      <button type="button" id="nav-checklist" onclick="switchTab('checklist')" class="nav-btn">
+        <span class="nav-icon-wrap">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+          <span id="nav-badge" class="nav-badge hidden">0</span>
+        </span>
+        <span>Palengke List</span>
+      </button>
+
+      <button type="button" id="nav-itinerary" onclick="switchTab('itinerary')" class="nav-btn">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        <span>Itinerary &amp; Toka</span>
+      </button>
+
+      <button type="button" id="nav-presyo" onclick="switchTab('presyo')" class="nav-btn">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+          <line x1="7" y1="7" x2="7.01" y2="7"></line>
+        </svg>
+        <span>Presyo Guide</span>
+      </button>
+
+      <button type="button" id="nav-ambagan" onclick="switchTab('ambagan')" class="nav-btn">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <line x1="12" y1="1" x2="12" y2="23"></line>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+        </svg>
+        <span>Ambagan &amp; Budget</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Add Member Modal -->
+  <div id="member-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">➕ Add Member sa Ledger</h3>
+        <button type="button" onclick="closeMemberModal()" style="background:none;border:none;font-size:1rem;color:var(--slate-400);cursor:pointer;">✕</button>
+      </div>
+      <form onsubmit="handleAddMember(event)">
+        <div class="form-group">
+          <label class="form-label" for="new-member-name">Member Name</label>
+          <input type="text" id="new-member-name" required placeholder="Hal. Driver / Guest" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="new-member-amount">Amount (₱)</label>
+          <input type="number" id="new-member-amount" min="0" step="50" value="2250" class="form-control" />
+        </div>
+        <div class="modal-actions">
+          <button type="button" onclick="closeMemberModal()" class="btn-modal-secondary">Cancel</button>
+          <button type="submit" class="btn-modal-primary">Add Member</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Custom Item Modal -->
+  <div id="add-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">➕ Dagdag sa Palengke List</h3>
+        <button type="button" onclick="closeAddModal()" style="background:none;border:none;font-size:1rem;color:var(--slate-400);cursor:pointer;">✕</button>
+      </div>
+      <form onsubmit="handleAddItem(event)">
+        <div class="form-group">
+          <label class="form-label" for="new-item-name">Item / Rekado Name</label>
+          <input type="text" id="new-item-name" required placeholder="Hal. Yelo / Marshmallow" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="new-item-category">Category</label>
+          <select id="new-item-category" class="form-control">
+            <option value="karne">🥩 Karne, Isda &amp; Frozen</option>
+            <option value="itlog">🥚 Itlog, Tokwa &amp; Dairy</option>
+            <option value="gulay">🥬 Gulay, Prutas &amp; Fresh Aromatics</option>
+            <option value="grocery" selected>🥫 Grocery, Canned Goods &amp; Seasonings</option>
+            <option value="kape">☕ Kape, Inumin &amp; Disposables</option>
+            <option value="gamit">🔥 Gamit sa Ihawan &amp; Kusina</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="new-item-note">Note / Para saan (Optional)</label>
+          <input type="text" id="new-item-note" placeholder="Hal. pang-kids / pang-pulutan" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="new-item-optional" style="width:1rem;height:1rem;" />
+            <span>Markahan bilang Optional item</span>
+          </label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" onclick="closeAddModal()" class="btn-modal-secondary">Cancel</button>
+          <button type="submit" class="btn-modal-primary">Save Item</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Reset Checks Confirmation Modal -->
+  <div id="reset-modal" class="modal-backdrop hidden">
+    <div class="modal-card" style="max-width: 22rem; text-align: center;">
+      <div style="font-size: 2rem; margin-bottom: 0.4rem;">🔄</div>
+      <h3 class="modal-title" style="margin-bottom: 0.35rem;">I-reset ang lahat ng checks?</h3>
+      <p style="font-size: 0.78rem; color: var(--slate-500);">Matatanggal ang checkmarks sa Palengke List pero mananatili ang custom items.</p>
+      <div class="modal-actions">
+        <button type="button" onclick="closeResetModal()" class="btn-modal-secondary">Cancel</button>
+        <button type="button" onclick="confirmResetChecks()" class="btn-modal-danger">Oo, Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <span class="toast-dot"></span>
+    <span id="toast-message">Ready!</span>
+  </div>
+
+  <script>
+    // Fresh versioned storage key so stale/empty data never hides items
+    const STORAGE_KEY = "ka_lucena_outing_v10";
+
+    // ==================== DEFAULT MENU DATA (NO FRUIT SALAD, NO SINIGANG) ====================
+    const DEFAULT_MENU_DATA = [
+      {
+        dayId: "day-1",
+        dayTitle: "DAY 1 (DECEMBER 5)",
+        daySubtitle: "Arrival, Lunch, Dinner & Dessert",
+        meals: [
+          {
+            id: "d1-breakfast",
+            mealType: "Breakfast",
+            icon: "☀️",
+            note: "Good hanggang lunch/kinabukasan",
+            dishes: [
+              {
+                name: "Adobo ni Jayson (manok, atay, balun-balunan)",
+                badge: "Lulutuin nila Jayson (Excluded sa Palengke List)",
+                badgeColor: "coral",
+                details: [
+                  { label: "Karne", text: "3 kg mix ng Manok, Atay, at Balun-balunan" },
+                  { label: "Rekado", text: "1 cup toyo, 3/4 cup suka, 2 ulo ng bawang, 1 tbsp pamintang buo, 5–6 pcs dahon ng laurel, 1–2 tbsp asukal, mantika, tubig" }
+                ]
+              }
+            ]
+          },
+          {
+            id: "d1-lunch",
+            mealType: "Lunch",
+            icon: "🌴",
+            note: "Boodle Fight setup — magdala ng Dahon ng Saging",
+            dishes: [
+              {
+                name: "Ensaladang Liempo",
+                details: [
+                  { label: "Karne", text: "4 kg Pork Liempo (pahiwa ng pang-ihaw, ~1/2 inch thick, hihiwain nang bite-size pagkaihaw)" },
+                  { label: "Marinade", text: "Toyo, calamansi, bawang, paminta, brown sugar, banana ketchup, Sprite/7-Up" },
+                  { label: "Pang-halo", text: "6 pcs pipino, 1/2 kg kamatis, 3 pcs sibuyas puti, 5–6 pcs siling haba, 3–4 pcs siling labuyo" },
+                  { label: "Dressing", text: "Suka, sugar, toyo, paminta, asin" }
+                ]
+              },
+              {
+                name: "Inihaw na Bangus",
+                details: [
+                  { label: "Isda", text: "2 pcs Large Boneless Bangus" },
+                  { label: "Palaman & Sawsawan", text: "Kamatis, sibuyas pula, luya, dahon ng sibuyas, asin, paminta; sawsawan (toyo, suka, calamansi, sibuyas, siling labuyo)" }
+                ]
+              },
+              {
+                name: "Crab and Corn Soup (for the kids)",
+                badge: "Kids Meal",
+                badgeColor: "amber",
+                details: [
+                  { label: "Ingredients", text: "Crab meat/sticks, sweet corn, egg drop, broth, spring onions, paminta" }
+                ]
+              },
+              {
+                name: "Dahon ng Saging pang-Boodle Fight",
+                badge: "Boodle Fight",
+                badgeColor: "amber",
+                details: [
+                  { label: "Setup", text: "Dahon ng saging pang-boodle fight sa Day 1 Lunch" }
+                ]
+              }
+            ]
+          },
+          {
+            id: "d1-dinner",
+            mealType: "Dinner",
+            icon: "🌙",
+            note: "Plus tira nung lunch",
+            dishes: [
+              {
+                name: "Sisig Tofu",
+                details: [
+                  { label: "Main", text: "30 blocks Firm Tofu" },
+                  { label: "Rekado", text: "Mayonnaise, sibuyas pula, siling haba, siling labuyo, oyster sauce, calamansi, paminta, mantika" }
+                ]
+              },
+              {
+                name: "Kimchi Jiggae Soup",
+                details: [
+                  { label: "Karne", text: "1 kg Pork Belly" },
+                  { label: "Rekado", text: "1 kg Kimchi with juice, 3–5 blocks Soft/Silken Tofu, 1 pack Enoki mushrooms (optional), gochujang, gochugaru, sibuyas puti, bawang, dahon ng sibuyas, sesame oil" }
+                ]
+              },
+              {
+                name: "Chicken Lollipop (for the kids)",
+                badge: "Kids Meal",
+                badgeColor: "amber",
+                details: [
+                  { label: "Karne & Rekado", text: "1.5–2 kg Chicken wings/drumettes lollipop style, marinade & coating" }
+                ]
+              }
+            ]
+          },
+          {
+            id: "d1-dessert",
+            mealType: "Dessert / Panghimagas",
+            icon: "🍌",
+            note: "Day 1 – Day 2 • Fresh Fruits",
+            dishes: [
+              {
+                name: "Fresh Fruits",
+                badge: "Panghimagas",
+                badgeColor: "amber",
+                details: [
+                  { label: "Prutas", text: "Fresh Fruits (kahit 1 or 2 lang - e.g. saging, pakwan)" }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        dayId: "day-2",
+        dayTitle: "DAY 2 (DECEMBER 6)",
+        daySubtitle: "Breakfast, Lunch & Check-out",
+        meals: [
+          {
+            id: "d2-breakfast",
+            mealType: "Breakfast",
+            icon: "🍳",
+            note: "Good hanggang lunch ang Sopas",
+            dishes: [
+              {
+                name: "Hotdog",
+                details: [
+                  { label: "Karne", text: "1 pack (1 kg) Jumbo Hotdog + mantika" }
+                ]
+              },
+              {
+                name: "Egg",
+                details: [
+                  { label: "Main", text: "1 tray (30 pcs) Itlog" }
+                ]
+              },
+              {
+                name: "Sopas",
+                details: [
+                  { label: "Karne", text: "1 kg Chicken Breast + hotdog from pack" },
+                  { label: "Rekado", text: "1 kg Elbow Macaroni, repolyo, carrots, sibuyas, bawang, 2 cans Evaporated Milk, 3 pcs Chicken Knorr Cubes, butter/margarine, asin, paminta" }
+                ]
+              }
+            ]
+          },
+          {
+            id: "d2-lunch",
+            mealType: "Lunch",
+            icon: "🔥",
+            note: "Plus tira na Adobo at Sopas",
+            dishes: [
+              {
+                name: "Inihaw na Pecho Manok",
+                details: [
+                  { label: "Karne", text: "3–4 kg Chicken Pecho" },
+                  { label: "Marinade", text: "Toyo, calamansi, paminta, brown sugar, banana ketchup, basting oil" }
+                ]
+              },
+              {
+                name: "Itlog na maalat na may kamatis at talong",
+                details: [
+                  { label: "Main & Gulay", text: "10–12 pcs itlog na maalat, 8–10 pcs talong, 3/4 kg kamatis, 1/4 kg sibuyas pula, konting suka/asin" }
+                ]
+              }
+            ]
+          },
+          {
+            id: "d2-dinner",
+            mealType: "Dinner",
+            icon: "🚗",
+            note: "Check-out / Dinner",
+            dishes: [
+              {
+                name: "Drive Thru",
+                details: [
+                  { label: "Meal", text: "Drive Thru" }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ];
+
+    // ==================== DEFAULT PALENGKE CATEGORIES (NO FRUIT SALAD, NO SINIGANG NA SALMON) ====================
+    const DEFAULT_CATEGORIES = [
+      {
+        id: "karne",
+        title: "Karne, Isda & Frozen",
+        icon: "🥩",
+        items: [
+          { id: "k-1", name: "4 kg Pork Liempo", note: "pang-Ensaladang Liempo", optional: false },
+          { id: "k-2", name: "1 kg Pork Belly", note: "pang-Kimchi Jiggae Soup", optional: false },
+          { id: "k-3", name: "3–4 kg Chicken Pecho", note: "pang-Inihaw na Pecho Manok", optional: false },
+          { id: "k-4", name: "1.5–2 kg Chicken Lollipop / Wings", note: "for the kids", optional: false },
+          { id: "k-5", name: "1 kg Chicken Breast", note: "pang-Sopas", optional: false },
+          { id: "k-6", name: "Crab meat / sticks & Sweet corn", note: "for Crab and Corn Soup (kids)", optional: false },
+          { id: "k-7", name: "2 pcs Large Boneless Bangus", note: "pang-Inihaw na Bangus", optional: false },
+          { id: "k-8", name: "1 pack (1 kg) Jumbo Hotdog", note: "pang-Breakfast at Sopas", optional: false }
+        ]
+      },
+      {
+        id: "itlog",
+        title: "Itlog, Tokwa & Dairy",
+        icon: "🥚",
+        items: [
+          { id: "i-1", name: "1 tray (30 pcs) Itlog", note: "Breakfast, Crab & Corn Soup, Chicken Lollipop", optional: false },
+          { id: "i-2", name: "10–12 pcs Itlog na Maalat", note: "pang-Itlog na maalat na may kamatis at talong", optional: false },
+          { id: "i-3", name: "30 blocks Firm Tofu", note: "pang-Sisig Tofu", optional: false },
+          { id: "i-4", name: "3–5 blocks Soft / Silken Tofu", note: "pang-Kimchi Jiggae Soup", optional: false },
+          { id: "i-5", name: "2 cans Evaporated Milk", note: "pang-Sopas", optional: false },
+          { id: "i-6", name: "1 bar/tub Butter o Margarine", note: "pang-Sopas", optional: false }
+        ]
+      },
+      {
+        id: "gulay",
+        title: "Gulay, Prutas & Fresh Aromatics",
+        icon: "🥬",
+        items: [
+          { id: "g-1", name: "Fresh Fruits (kahit 1 or 2 lang - e.g. saging, pakwan)", note: "panghimagas / dessert", optional: false },
+          { id: "g-2", name: "6 pcs Pipino", note: "pang-Ensaladang Liempo", optional: false },
+          { id: "g-3", name: "4 pcs malaking Sibuyas Puti", note: "Ensaladang Liempo, Kimchi Jiggae, Sopas", optional: false },
+          { id: "g-4", name: "2.25 kg Kamatis", note: "Ensalada, Bangus, Itlog na maalat", optional: false },
+          { id: "g-5", name: "5 ulo Bawang", note: "marinade, gisa, Sopas, Jjigae", optional: false },
+          { id: "g-6", name: "1.5 kg Sibuyas Pula", note: "Sisig Tofu, Bangus, Itlog na maalat", optional: false },
+          { id: "g-7", name: "1 buo Luya", note: "pang-Bangus", optional: false },
+          { id: "g-8", name: "1/2 kg Calamansi (~50 pcs)", note: "marinade, Sisig Tofu, Chicken Lollipop", optional: false },
+          { id: "g-9", name: "8–10 pcs Talong", note: "pang-Itlog na maalat na may kamatis at talong", optional: false },
+          { id: "g-10", name: "1 maliit na Repolyo", note: "pang-Sopas", optional: false },
+          { id: "g-11", name: "2 pcs Carrots", note: "pang-Sopas", optional: false },
+          { id: "g-12", name: "18–20 pcs Siling Haba (green)", note: "Ensalada, Sisig Tofu", optional: false },
+          { id: "g-13", name: "1 small pack Siling Labuyo", note: "Ensalada, Sisig Tofu, sawsawan", optional: false },
+          { id: "g-15", name: "2 tali Dahon ng Sibuyas (Spring Onions)", note: "Crab & Corn Soup, Bangus, Jjigae", optional: true },
+          { id: "g-16", name: "1 pack Enoki Mushrooms", note: "pang-Kimchi Jiggae Soup", optional: true }
+        ]
+      },
+      {
+        id: "grocery",
+        title: "Grocery, Canned Goods & Seasonings",
+        icon: "🥫",
+        items: [
+          { id: "gr-1", name: "6–7 kg Bigas", note: "staple rice", optional: false },
+          { id: "gr-2", name: "1 kg Elbow Macaroni", note: "pang-Sopas", optional: false },
+          { id: "gr-5", name: "1 pack Breading Mix / Flour + Marinade & Coating", note: "pang-Chicken Lollipop", optional: false },
+          { id: "gr-6", name: "2 packs Banana Ketchup", note: "Ensaladang Liempo & Pecho Manok", optional: false },
+          { id: "gr-7", name: "1 pack Oyster Sauce", note: "pang-Sisig Tofu", optional: false },
+          { id: "gr-8", name: "1 kg Kimchi with juice", note: "pang-Kimchi Jiggae Soup", optional: false },
+          { id: "gr-9", name: "1 small tub Gochujang & 1 small pack Gochugaru", note: "pang-Kimchi Jiggae Soup", optional: false },
+          { id: "gr-10", name: "2 pouches (220 ml) o 1 pouch (470 ml) Mayonnaise", note: "pang-Sisig Tofu", optional: false },
+          { id: "gr-11", name: "1 small bottle Toyo & 1 liter Suka", note: "marinade at dressing", optional: false },
+          { id: "gr-12", name: "2.5 liters Mantika + Basting Oil + Sprite/7-Up", note: "prito, basting, marinade", optional: false },
+          { id: "gr-13", name: "1 small bottle Sesame Oil", note: "pang-Kimchi Jiggae Soup", optional: false },
+          { id: "gr-14", name: "1 pack Chicken Knorr Cubes", note: "pang-Sopas", optional: false },
+          { id: "gr-15", name: "1 small pack Pamintang Durog, Asin & Brown Sugar", note: "seasoning", optional: false }
+        ]
+      },
+      {
+        id: "kape",
+        title: "Kape, Inumin & Disposables",
+        icon: "☕",
+        items: [
+          { id: "kp-1", name: "Kape", note: "depende sa majority ng trip", optional: false },
+          { id: "kp-2", name: "Softdrinks (Coke, Royal, & Sprite)", note: "inumin", optional: false },
+          { id: "kp-3", name: "Paper plates", note: "disposable", optional: true },
+          { id: "kp-4", name: "Spoons & forks", note: "disposable", optional: true },
+          { id: "kp-5", name: "Paper cups", note: "disposable", optional: true },
+          { id: "kp-6", name: "Styro bowls pang-Sopas", note: "disposable", optional: true }
+        ]
+      },
+      {
+        id: "gamit",
+        title: "Gamit sa Ihawan & Kusina",
+        icon: "🔥",
+        items: [
+          { id: "gm-1", name: "Dahon ng Saging pang-boodle fight", note: "Day 1 Lunch", optional: false },
+          { id: "gm-2", name: "2 sako Uling", note: "pang-ihaw", optional: false },
+          { id: "gm-3", name: "1 roll Aluminum Foil", note: "pang-ihaw", optional: false },
+          { id: "gm-4", name: "Fire starter / Lighter / Posporo", note: "pampaliyab", optional: false }
+        ]
+      }
+    ];
+
+    // ==================== DEFAULT ITINERARY & TOKA ====================
+    const DEFAULT_MARKET_TEAM = {
+      morning: "",
+      afternoon: "",
+      notes: "Mamalengke sa Friday (Dec. 4) — Karne, isda, gulay, Fresh Fruits, at groceries."
+    };
+
+    const DEFAULT_ITINERARY = [
+      { id: "it-1", day: "Day 1 (Dec. 5)", time: "02:00:00", activity: "Assembly at Calbayog St.", assignee: "" },
+      { id: "it-2", day: "Day 1 (Dec. 5)", time: "03:00:00", activity: "Departure", assignee: "" },
+      { id: "it-3", day: "Day 1 (Dec. 5)", time: "06:00:00", activity: "In at transient house", assignee: "" },
+      { id: "it-4", day: "Day 1 (Dec. 5)", time: "07:00:00", activity: "Almusal", assignee: "Jayson (Adobo)" },
+      { id: "it-5", day: "Day 1 (Dec. 5)", time: "08:00:00", activity: "Island Hopping", assignee: "" },
+      { id: "it-6", day: "Day 1 (Dec. 5)", time: "10:30 – 11:00 am", activity: "Back to Transient", assignee: "" },
+      { id: "it-7", day: "Day 1 (Dec. 5)", time: "11:00 am", activity: "Ihaw / Cook preparation", assignee: "" },
+      { id: "it-8", day: "Day 1 (Dec. 5)", time: "12:00 PM", activity: "Lunch break", assignee: "" },
+      { id: "it-9", day: "Day 1 (Dec. 5)", time: "1:00 pm", activity: "Shot", assignee: "" },
+      { id: "it-10", day: "Day 1 (Dec. 5)", time: "2:00 pm", activity: "Lipat na sa Kabilang Transient", assignee: "" },
+      { id: "it-11", day: "Day 1 (Dec. 5)", time: "3:00 pm", activity: "Swimming session", assignee: "" },
+      { id: "it-12", day: "Day 1 (Dec. 5)", time: "18:00:00", activity: "Curfew at the beach", assignee: "" },
+      { id: "it-13", day: "Day 2 (Dec. 6)", time: "5:00 / 6:00 AM", activity: "Cook", assignee: "" },
+      { id: "it-14", day: "Day 2 (Dec. 6)", time: "7:00 am", activity: "Morning Swimming", assignee: "" },
+      { id: "it-15", day: "Day 2 (Dec. 6)", time: "12:00 pm", activity: "Lunch break", assignee: "" },
+      { id: "it-16", day: "Day 2 (Dec. 6)", time: "1:00 pm", activity: "Afternoon Swimming", assignee: "" },
+      { id: "it-17", day: "Day 2 (Dec. 6)", time: "4:00 pm", activity: "Pack up na", assignee: "" },
+      { id: "it-18", day: "Day 2 (Dec. 6)", time: "17:00:00", activity: "Uwian naaaaa", assignee: "" }
+    ];
+
+    const DEFAULT_TOKA_DISHES = [
+      { id: "td-1", dish: "Adobo ni Jayson (Day 1 Bfast)", cook: "Jayson" },
+      { id: "td-2", dish: "Ensaladang Liempo (Day 1 Lunch)", cook: "" },
+      { id: "td-3", dish: "Inihaw na Bangus (Day 1 Lunch)", cook: "" },
+      { id: "td-4", dish: "Crab and Corn Soup (Day 1 Kids)", cook: "" },
+      { id: "td-5", dish: "Sisig Tofu (Day 1 Dinner)", cook: "" },
+      { id: "td-6", dish: "Kimchi Jiggae Soup (Day 1 Dinner)", cook: "" },
+      { id: "td-7", dish: "Chicken Lollipop (Day 1 Kids)", cook: "" },
+      { id: "td-8", dish: "Fresh Fruits (Panghimagas)", cook: "" },
+      { id: "td-9", dish: "Hotdog, Egg & Sopas (Day 2 Bfast)", cook: "" },
+      { id: "td-11", dish: "Inihaw na Pecho Manok (Day 2 Lunch)", cook: "" },
+      { id: "td-12", dish: "Itlog na maalat na may kamatis at talong", cook: "" }
+    ];
+
+    // ==================== DEFAULT PRESYO GUIDE (NO FRUIT SALAD, NO SINIGANG) ====================
+    const DEFAULT_PRICES = [
+      { id: "pr-1", item: "Pork Liempo (kg)", qty: 4, unitPrice: 380 },
+      { id: "pr-2", item: "Pork Belly - Kimchi Jiggae (kg)", qty: 1, unitPrice: 390 },
+      { id: "pr-3", item: "Chicken Pecho (kg)", qty: 3.5, unitPrice: 210 },
+      { id: "pr-4", item: "Chicken Lollipop / Wings (kg)", qty: 1.5, unitPrice: 220 },
+      { id: "pr-5", item: "Chicken Breast - Sopas (kg)", qty: 1, unitPrice: 220 },
+      { id: "pr-6", item: "Crab Meat/Sticks & Sweet Corn", qty: 1, unitPrice: 210 },
+      { id: "pr-7", item: "Boneless Bangus Large (pcs)", qty: 2, unitPrice: 180 },
+      { id: "pr-8", item: "Jumbo Hotdog (1 kg pack)", qty: 1, unitPrice: 190 },
+      { id: "pr-9", item: "Egg Tray (30 pcs)", qty: 1, unitPrice: 260 },
+      { id: "pr-10", item: "Itlog na Maalat (12 pcs)", qty: 1, unitPrice: 180 },
+      { id: "pr-11", item: "Firm Tofu / Tokwa (blocks)", qty: 30, unitPrice: 10 },
+      { id: "pr-12", item: "Soft / Silken Tofu (blocks)", qty: 4, unitPrice: 45 },
+      { id: "pr-13", item: "Bigas (kg)", qty: 7, unitPrice: 52 },
+      { id: "pr-14", item: "Fresh Fruits (saging / pakwan)", qty: 1, unitPrice: 220 },
+      { id: "pr-15", item: "Gulay, Aromatics, Staples, Uling & Dahon", qty: 1, unitPrice: 1170 }
+    ];
+
+    // ==================== DEFAULT AMBAGAN & BUDGET (FREE / KID, PAID, UNPAID) ====================
+    const REQUIRED_CONTRIBUTION = 2250;
+
+    function computeMemberStatus(amount, isKid) {
+      if (isKid) return "free";
+      return (Number(amount) || 0) >= REQUIRED_CONTRIBUTION ? "paid" : "unpaid";
+    }
+
+    function getStatusBadgeLabel(status) {
+      if (status === "free") return "Free / Kid";
+      if (status === "paid") return "Paid";
+      return "Unpaid";
+    }
+
+    const DEFAULT_MEMBERS = [
+      { id: "m-1", name: "Idang", amount: 2250, isKid: false },
+      { id: "m-2", name: "Dem", amount: 2250, isKid: false },
+      { id: "m-3", name: "Lalene", amount: 2250, isKid: false },
+      { id: "m-4", name: "Joshua", amount: 2250, isKid: false },
+      { id: "m-5", name: "Aisha", amount: 0, isKid: true },
+      { id: "m-6", name: "Jayson", amount: 3500, isKid: false },
+      { id: "m-7", name: "Lalaine", amount: 0, isKid: false },
+      { id: "m-8", name: "Anak ni Lalaine", amount: 0, isKid: true },
+      { id: "m-9", name: "Athena", amount: 0, isKid: true },
+      { id: "m-10", name: "Renren", amount: 2250, isKid: false },
+      { id: "m-11", name: "Eric", amount: 2250, isKid: false },
+      { id: "m-12", name: "Yeye", amount: 2250, isKid: false },
+      { id: "m-13", name: "Christine Jan", amount: 2250, isKid: false },
+      { id: "m-14", name: "Rodel", amount: 2250, isKid: false },
+      { id: "m-15", name: "Jane", amount: 2250, isKid: false }
+    ].map(m => ({ ...m, status: computeMemberStatus(m.amount, m.isKid) }));
+
+    const DEFAULT_ALLOCATION = [
+      { id: "al-1", category: "VAN", amount: 11000 },
+      { id: "al-2", category: "TRANSIENT", amount: 11000 },
+      { id: "al-3", category: "FOODS", amount: 4000 }
+    ];
+
+    // ==================== APPLICATION STATE ====================
+    let checkedState = {};
+    let customItems = [];
+    let marketTeam = { morning: "", afternoon: "", notes: "" };
+    let itineraryData = [];
+    let tokaDishes = [];
+    let priceItems = [];
+    let membersLedger = [];
+    let budgetAllocation = [];
+
+    let currentTab = "menu";
+    let currentFilter = "all";
+    let hideOptional = false;
+    let searchQuery = "";
+    let menuDayFilter = "all";
+    let allMealsExpanded = true;
+
+    function buildDefaultBundle() {
+      return {
+        checkedState: {},
+        customItems: [],
+        marketTeam: JSON.parse(JSON.stringify(DEFAULT_MARKET_TEAM)),
+        itineraryData: JSON.parse(JSON.stringify(DEFAULT_ITINERARY)),
+        tokaDishes: JSON.parse(JSON.stringify(DEFAULT_TOKA_DISHES)),
+        priceItems: JSON.parse(JSON.stringify(DEFAULT_PRICES)),
+        membersLedger: JSON.parse(JSON.stringify(DEFAULT_MEMBERS)),
+        budgetAllocation: JSON.parse(JSON.stringify(DEFAULT_ALLOCATION))
+      };
+    }
+
+    function applyBundle(bundle) {
+      const def = buildDefaultBundle();
+      checkedState = (bundle.checkedState && typeof bundle.checkedState === "object") ? bundle.checkedState : def.checkedState;
+      customItems = Array.isArray(bundle.customItems) ? bundle.customItems : def.customItems;
+      marketTeam = (bundle.marketTeam && typeof bundle.marketTeam === "object")
+        ? { ...def.marketTeam, ...bundle.marketTeam }
+        : def.marketTeam;
+      itineraryData = (Array.isArray(bundle.itineraryData) && bundle.itineraryData.length > 0)
+        ? bundle.itineraryData
+        : def.itineraryData;
+      tokaDishes = (Array.isArray(bundle.tokaDishes) && bundle.tokaDishes.length > 0)
+        ? bundle.tokaDishes
+        : def.tokaDishes;
+      priceItems = (Array.isArray(bundle.priceItems) && bundle.priceItems.length > 0)
+        ? bundle.priceItems
+        : def.priceItems;
+      membersLedger = (Array.isArray(bundle.membersLedger) && bundle.membersLedger.length > 0)
+        ? bundle.membersLedger.map(m => {
+            const kidFlag = Boolean(m.isKid) || m.status === "free";
+            const amt = Math.max(0, Number(m.amount) || 0);
+            return {
+              ...m,
+              amount: amt,
+              isKid: kidFlag,
+              status: computeMemberStatus(amt, kidFlag)
+            };
+          })
+        : def.membersLedger;
+      budgetAllocation = (Array.isArray(bundle.budgetAllocation) && bundle.budgetAllocation.length > 0)
+        ? bundle.budgetAllocation
+        : def.budgetAllocation;
+    }
+
+    function saveAllState() {
+      try {
+        const payload = {
+          checkedState,
+          customItems,
+          marketTeam,
+          itineraryData,
+          tokaDishes,
+          priceItems,
+          membersLedger,
+          budgetAllocation
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      } catch (err) {
+        // Ignore storage errors on restricted browsers
+      }
+    }
+
+    function loadAllState() {
+      const def = buildDefaultBundle();
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          applyBundle(def);
+          saveAllState();
+          return;
+        }
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== "object") {
+          applyBundle(def);
+          saveAllState();
+          return;
+        }
+        applyBundle(parsed);
+      } catch (err) {
+        applyBundle(def);
+        saveAllState();
+      }
+    }
+
+    function reloadAllDefaultData() {
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (err) {
+        // Ignore storage errors
+      }
+      const def = buildDefaultBundle();
+      applyBundle(def);
+      saveAllState();
+      renderAll();
+      showToast("Na-reload ang Default Data (v10)!");
+    }
+
+    function renderAll() {
+      renderMenu();
+      renderChecklist();
+      renderItineraryTab();
+      renderPriceGuide();
+      renderAmbaganTab();
+    }
+
+    // ==================== HELPERS ====================
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function formatPeso(num) {
+      const n = Math.round(Number(num) || 0);
+      return "₱" + n.toLocaleString("en-PH");
+    }
+
+    let toastTimer;
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      document.getElementById("toast-message").textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2600);
+    }
+
+    function copyTextFallback(text, successMsg) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
+      textArea.style.top = "0";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand("copy");
+        showToast(successMsg || "Copied to clipboard!");
+      } catch (err) {
+        showToast("Hindi ma-copy, subukan ulit.");
+      }
+      document.body.removeChild(textArea);
+    }
+
+    // ==================== TAB 1: MENU & REKADO ====================
+    function renderMenu() {
+      const container = document.getElementById("menu-container");
+      const filteredDays = menuDayFilter === "all"
+        ? DEFAULT_MENU_DATA
+        : DEFAULT_MENU_DATA.filter(d => d.dayId === menuDayFilter);
+
+      container.innerHTML = filteredDays.map(day => `
+        <div id="${escapeHtml(day.dayId)}">
+          <div class="day-header">
+            <div>
+              <h2 class="day-title">${escapeHtml(day.dayTitle)}</h2>
+              <p class="day-sub">${escapeHtml(day.daySubtitle)}</p>
+            </div>
+            <span class="course-count-badge">${day.meals.length} Courses</span>
+          </div>
+
+          <div class="stack-sm">
+            ${day.meals.map(meal => `
+              <div class="meal-card">
+                <button type="button" onclick="toggleMealCard('${escapeHtml(meal.id)}')" class="meal-card-btn">
+                  <div class="meal-left">
+                    <span class="meal-emoji">${escapeHtml(meal.icon)}</span>
+                    <div>
+                      <div class="meal-title-row">
+                        <h3 class="meal-type">${escapeHtml(meal.mealType)}</h3>
+                        <span class="meal-summary-tag">${escapeHtml(meal.dishes.map(d => d.name.split(" (")[0]).join(" • "))}</span>
+                      </div>
+                      ${meal.note ? `<p class="meal-note">${escapeHtml(meal.note)}</p>` : ""}
+                    </div>
+                  </div>
+                  <svg id="chevron-${escapeHtml(meal.id)}" class="chevron-icon ${allMealsExpanded ? "rotated" : ""}" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+
+                <div id="body-${escapeHtml(meal.id)}" class="meal-body ${allMealsExpanded ? "" : "hidden"}">
+                  ${meal.dishes.map(dish => `
+                    <div class="dish-box">
+                      <div class="dish-header">
+                        <h4 class="dish-name">${escapeHtml(dish.name)}</h4>
+                        ${dish.badge ? `<span class="dish-badge ${escapeHtml(dish.badgeColor || "amber")}">${escapeHtml(dish.badge)}</span>` : ""}
+                      </div>
+                      <ul class="dish-list">
+                        ${dish.details.map(det => `
+                          <li>
+                            <span class="bullet-dot">•</span>
+                            <span><strong>${escapeHtml(det.label)}:</strong> ${escapeHtml(det.text)}</span>
+                          </li>
+                        `).join("")}
+                      </ul>
+                    </div>
+                  `).join("")}
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function filterMenuDay(dayFilter) {
+      menuDayFilter = dayFilter;
+      document.getElementById("pill-day-all").classList.toggle("active", dayFilter === "all");
+      document.getElementById("pill-day-1").classList.toggle("active", dayFilter === "day-1");
+      document.getElementById("pill-day-2").classList.toggle("active", dayFilter === "day-2");
+      renderMenu();
+    }
+
+    function toggleMealCard(mealId) {
+      const body = document.getElementById("body-" + mealId);
+      const chevron = document.getElementById("chevron-" + mealId);
+      if (!body) return;
+      const isHidden = body.classList.contains("hidden");
+      body.classList.toggle("hidden", !isHidden);
+      if (chevron) chevron.classList.toggle("rotated", isHidden);
+    }
+
+    function toggleAllMeals() {
+      allMealsExpanded = !allMealsExpanded;
+      document.getElementById("toggle-all-meals-btn").textContent = allMealsExpanded ? "Collapse All" : "Expand All";
+      renderMenu();
+    }
+
+    // ==================== TAB 2: PALENGKE LIST ====================
+    function getMergedCategories() {
+      return DEFAULT_CATEGORIES.map(cat => {
+        const extra = customItems.filter(item => item.categoryId === cat.id);
+        return {
+          ...cat,
+          items: [...cat.items, ...extra]
+        };
+      });
+    }
+
+    function renderChecklist() {
+      const container = document.getElementById("checklist-container");
+      const categories = getMergedCategories();
+      const query = searchQuery.trim().toLowerCase();
+      let renderedCats = 0;
+
+      const html = categories.map(cat => {
+        const activeCatItems = cat.items.filter(item => !(hideOptional && item.optional));
+        const checkedCatCount = activeCatItems.filter(item => !!checkedState[item.id]).length;
+
+        const filteredItems = activeCatItems.filter(item => {
+          const isChecked = !!checkedState[item.id];
+          if (currentFilter === "unchecked" && isChecked) return false;
+          if (currentFilter === "checked" && !isChecked) return false;
+          if (query) {
+            const matchName = item.name.toLowerCase().includes(query);
+            const matchNote = (item.note || "").toLowerCase().includes(query);
+            if (!matchName && !matchNote) return false;
+          }
+          return true;
+        });
+
+        if (filteredItems.length === 0) return "";
+        renderedCats++;
+
+        const isAllCatChecked = activeCatItems.length > 0 && checkedCatCount === activeCatItems.length;
+
+        return `
+          <div class="cat-card">
+            <div class="cat-header">
+              <div class="cat-title-wrap">
+                <span>${escapeHtml(cat.icon)}</span>
+                <h3 class="cat-title">${escapeHtml(cat.title)}</h3>
+              </div>
+              <span class="cat-badge ${isAllCatChecked ? "complete" : ""}">
+                ${checkedCatCount}/${activeCatItems.length}
+              </span>
+            </div>
+
+            <div>
+              ${filteredItems.map(item => {
+                const isChecked = !!checkedState[item.id];
+                return `
+                  <div onclick="toggleItem('${escapeHtml(item.id)}')" class="check-row ${isChecked ? "checked" : ""}">
+                    <div class="checkbox-box">
+                      ${isChecked ? `
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      ` : ""}
+                    </div>
+                    <div class="item-content">
+                      <div class="item-top">
+                        <span class="item-name">${escapeHtml(item.name)}</span>
+                        ${item.optional ? `<span class="tag-optional">Optional</span>` : ""}
+                        ${item.isCustom ? `<span class="tag-custom">Added</span>` : ""}
+                      </div>
+                      ${item.note ? `<p class="item-note">${escapeHtml(item.note)}</p>` : ""}
+                    </div>
+                    ${item.isCustom ? `
+                      <button type="button" onclick="deleteCustomItem(event, '${escapeHtml(item.id)}')" class="btn-delete-custom" title="Remove custom item">
+                        ✕
+                      </button>
+                    ` : ""}
+                  </div>
+                `;
+              }).join("")}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      if (renderedCats === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div style="font-size: 1.75rem; margin-bottom: 0.35rem;">🔍</div>
+            <p style="font-size: 0.88rem; font-weight: 700; color: var(--slate-700);">Walang nahanap na item</p>
+            <p style="font-size: 0.75rem; color: var(--slate-500); margin-top: 0.2rem;">Subukang i-clear ang search o i-click ang Reload Default Data.</p>
+          </div>
+        `;
+      } else {
+        container.innerHTML = html;
+      }
+
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const categories = getMergedCategories();
+      let total = 0;
+      let checked = 0;
+
+      categories.forEach(cat => {
+        cat.items.forEach(item => {
+          if (hideOptional && item.optional) return;
+          total++;
+          if (checkedState[item.id]) checked++;
+        });
+      });
+
+      const pct = total === 0 ? 0 : Math.round((checked / total) * 100);
+      document.getElementById("progress-label").textContent = `${checked} / ${total} items checked (${pct}%)`;
+      document.getElementById("progress-bar").style.width = `${pct}%`;
+
+      const remaining = total - checked;
+      const badge = document.getElementById("nav-badge");
+      if (remaining > 0) {
+        badge.textContent = remaining;
+        badge.classList.remove("hidden");
+      } else {
+        badge.classList.add("hidden");
+      }
+    }
+
+    function toggleItem(itemId) {
+      if (checkedState[itemId]) {
+        delete checkedState[itemId];
+      } else {
+        checkedState[itemId] = true;
+      }
+      saveAllState();
+      renderChecklist();
+    }
+
+    function setFilter(filter) {
+      currentFilter = filter;
+      ["all", "unchecked", "checked"].forEach(f => {
+        document.getElementById("filter-" + f).classList.toggle("active", f === filter);
+      });
+      renderChecklist();
+    }
+
+    function toggleHideOptional() {
+      hideOptional = !hideOptional;
+      const btn = document.getElementById("filter-optional");
+      const label = document.getElementById("optional-label");
+      btn.classList.toggle("optional-active", hideOptional);
+      label.textContent = hideOptional ? "Optional Hidden" : "Hide Optional";
+      renderChecklist();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val;
+      document.getElementById("clear-search-btn").classList.toggle("hidden", val.trim().length === 0);
+      renderChecklist();
+    }
+
+    function clearSearch() {
+      const input = document.getElementById("search-input");
+      input.value = "";
+      handleSearch("");
+    }
+
+    function openAddModal() {
+      document.getElementById("add-modal").classList.remove("hidden");
+      document.getElementById("new-item-name").focus();
+    }
+
+    function closeAddModal() {
+      document.getElementById("add-modal").classList.add("hidden");
+      document.getElementById("new-item-name").value = "";
+      document.getElementById("new-item-note").value = "";
+      document.getElementById("new-item-optional").checked = false;
+    }
+
+    function handleAddItem(e) {
+      e.preventDefault();
+      const name = document.getElementById("new-item-name").value.trim();
+      const note = document.getElementById("new-item-note").value.trim();
+      const categoryId = document.getElementById("new-item-category").value;
+      const optional = document.getElementById("new-item-optional").checked;
+
+      if (!name) return;
+
+      customItems.push({
+        id: "custom-" + Date.now(),
+        categoryId,
+        name,
+        note,
+        optional,
+        isCustom: true
+      });
+
+      saveAllState();
+      closeAddModal();
+      renderChecklist();
+      showToast("Naidagdag na sa Palengke List!");
+    }
+
+    function deleteCustomItem(event, itemId) {
+      event.stopPropagation();
+      customItems = customItems.filter(item => item.id !== itemId);
+      delete checkedState[itemId];
+      saveAllState();
+      renderChecklist();
+      showToast("Tinanggal ang custom item.");
+    }
+
+    function openResetModal() {
+      document.getElementById("reset-modal").classList.remove("hidden");
+    }
+
+    function closeResetModal() {
+      document.getElementById("reset-modal").classList.add("hidden");
+    }
+
+    function confirmResetChecks() {
+      checkedState = {};
+      saveAllState();
+      closeResetModal();
+      renderChecklist();
+      showToast("Na-reset na ang checks!");
+    }
+
+    function copyUncheckedToClipboard() {
+      const categories = getMergedCategories();
+      const lines = [
+        "🏊‍♂️ PA-OUTING NI KA LUCENA • PALENGKE CHECKLIST",
+        "(Remaining Unchecked Items — Excluded Adobo ni Jayson)",
+        ""
+      ];
+
+      let totalRemaining = 0;
+
+      categories.forEach(cat => {
+        const unchecked = cat.items.filter(item => {
+          if (hideOptional && item.optional) return false;
+          return !checkedState[item.id];
+        });
+
+        if (unchecked.length > 0) {
+          lines.push(`${cat.icon} ${cat.title.toUpperCase()}`);
+          unchecked.forEach(item => {
+            totalRemaining++;
+            const optTag = item.optional ? " [OPTIONAL]" : "";
+            const noteTag = item.note ? ` (${item.note})` : "";
+            lines.push(`☐ ${item.name}${noteTag}${optTag}`);
+          });
+          lines.push("");
+        }
+      });
+
+      if (totalRemaining === 0) {
+        lines.push("🎉 Kumpleto na lahat ng nasa palengke checklist!");
+      }
+
+      copyTextFallback(lines.join("\n").trim(), "Copied Palengke List para sa GC!");
+    }
+
+    // ==================== TAB 3: ITINERARY & TOKA ====================
+    function renderItineraryTab() {
+      document.getElementById("market-morning").value = marketTeam.morning || "";
+      document.getElementById("market-afternoon").value = marketTeam.afternoon || "";
+      document.getElementById("market-notes").value = marketTeam.notes || "";
+
+      const tbody = document.getElementById("itinerary-tbody");
+      let lastDay = "";
+      tbody.innerHTML = itineraryData.map(row => {
+        let dividerHtml = "";
+        if (row.day !== lastDay) {
+          lastDay = row.day;
+          dividerHtml = `<tr class="day-divider"><td colspan="3">📅 ${escapeHtml(row.day)}</td></tr>`;
+        }
+        return `
+          ${dividerHtml}
+          <tr>
+            <td style="white-space: nowrap; font-weight: 700; color: var(--ocean-800);">${escapeHtml(row.time)}</td>
+            <td style="color: var(--slate-700);">${escapeHtml(row.activity)}</td>
+            <td>
+              <input
+                type="text"
+                value="${escapeHtml(row.assignee || "")}"
+                oninput="updateItineraryAssignee('${escapeHtml(row.id)}', this.value)"
+                placeholder="Naka-toka / Magluluto..."
+                class="inline-input"
+                style="padding: 0.38rem 0.55rem; font-size: 0.75rem;"
+              />
+            </td>
+          </tr>
+        `;
+      }).join("");
+
+      const tokaGrid = document.getElementById("toka-dishes-grid");
+      tokaGrid.innerHTML = tokaDishes.map(d => `
+        <div class="toka-item">
+          <div class="toka-dish">${escapeHtml(d.dish)}</div>
+          <input
+            type="text"
+            value="${escapeHtml(d.cook || "")}"
+            oninput="updateDishCook('${escapeHtml(d.id)}', this.value)"
+            placeholder="Magluluto / Naka-toka..."
+            class="inline-input"
+            style="padding: 0.38rem 0.55rem; font-size: 0.76rem; background: var(--white);"
+          />
+        </div>
+      `).join("");
+    }
+
+    function updateMarketTeam(field, value) {
+      marketTeam[field] = value;
+      saveAllState();
+    }
+
+    function updateItineraryAssignee(id, value) {
+      const item = itineraryData.find(r => r.id === id);
+      if (item) {
+        item.assignee = value;
+        saveAllState();
+      }
+    }
+
+    function updateDishCook(id, value) {
+      const item = tokaDishes.find(d => d.id === id);
+      if (item) {
+        item.cook = value;
+        saveAllState();
+      }
+    }
+
+    function copyItineraryToClipboard() {
+      const lines = [
+        "🗓️ PA-OUTING NI KA LUCENA • ITINERARY & TOKA (DEC 5–6, 2026)",
+        `🛒 Mamalengke (Fri Dec. 4 AM): ${marketTeam.morning || "TBA"}`,
+        `🛒 Mamalengke (Fri Dec. 4 PM): ${marketTeam.afternoon || "TBA"}`,
+        marketTeam.notes ? `📝 Notes: ${marketTeam.notes}` : "",
+        ""
+      ].filter(Boolean);
+
+      let curDay = "";
+      itineraryData.forEach(r => {
+        if (r.day !== curDay) {
+          curDay = r.day;
+          lines.push(`--- ${curDay.toUpperCase()} ---`);
+        }
+        const toka = r.assignee ? ` [Toka: ${r.assignee}]` : "";
+        lines.push(`• ${r.time} - ${r.activity}${toka}`);
+      });
+
+      lines.push("", "👨‍🍳 TOKA PER PUTAHE:");
+      tokaDishes.forEach(d => {
+        lines.push(`• ${d.dish}: ${d.cook || "TBA"}`);
+      });
+
+      copyTextFallback(lines.join("\n"), "Copied Itinerary & Toka para sa GC!");
+    }
+
+    // ==================== TAB 4: PRESYO GUIDE ====================
+    function renderPriceGuide() {
+      const tbody = document.getElementById("price-tbody");
+      tbody.innerHTML = priceItems.map(p => {
+        const sub = (Number(p.qty) || 0) * (Number(p.unitPrice) || 0);
+        return `
+          <tr>
+            <td style="font-weight: 700; color: var(--slate-800);">${escapeHtml(p.item)}</td>
+            <td style="text-align: right;">
+              <input
+                type="number"
+                min="0"
+                step="0.5"
+                value="${Number(p.qty) || 0}"
+                oninput="updatePriceField('${escapeHtml(p.id)}', 'qty', this.value)"
+                class="inline-input"
+                style="padding: 0.34rem 0.35rem; text-align: right; font-weight: 600;"
+              />
+            </td>
+            <td style="text-align: right;">
+              <input
+                type="number"
+                min="0"
+                step="5"
+                value="${Number(p.unitPrice) || 0}"
+                oninput="updatePriceField('${escapeHtml(p.id)}', 'unitPrice', this.value)"
+                class="inline-input"
+                style="padding: 0.34rem 0.35rem; text-align: right; font-weight: 600;"
+              />
+            </td>
+            <td id="sub-${escapeHtml(p.id)}" style="text-align: right; font-weight: 800; color: var(--ocean-800); white-space: nowrap;">
+              ${formatPeso(sub)}
+            </td>
+          </tr>
+        `;
+      }).join("");
+
+      updatePriceSummary();
+    }
+
+    function updatePriceField(id, field, value) {
+      const item = priceItems.find(p => p.id === id);
+      if (item) {
+        item[field] = Math.max(0, Number(value) || 0);
+        const subEl = document.getElementById("sub-" + id);
+        if (subEl) {
+          subEl.textContent = formatPeso(item.qty * item.unitPrice);
+        }
+        saveAllState();
+        updatePriceSummary();
+      }
+    }
+
+    function updatePriceSummary() {
+      const total = priceItems.reduce((sum, p) => sum + ((Number(p.qty) || 0) * (Number(p.unitPrice) || 0)), 0);
+      const perAdult = Math.ceil(total / 13);
+      const foodsAlloc = (budgetAllocation.find(a => a.category === "FOODS") || { amount: 4000 }).amount;
+      const diff = total - foodsAlloc;
+
+      document.getElementById("price-total-est").textContent = formatPeso(total);
+      document.getElementById("price-per-adult").textContent = `${formatPeso(perAdult)} / adult`;
+      document.getElementById("price-vs-budget").textContent = diff > 0
+        ? `+${formatPeso(diff)} vs ${formatPeso(foodsAlloc)} Foods budget`
+        : `${formatPeso(Math.abs(diff))} under ${formatPeso(foodsAlloc)} Foods budget`;
+    }
+
+    // ==================== TAB 5: AMBAGAN & BUDGET ====================
+    function renderAmbaganTab() {
+      const memTbody = document.getElementById("members-tbody");
+      memTbody.innerHTML = membersLedger.map(m => {
+        const currentAmt = Number(m.amount) || 0;
+        const autoStatus = computeMemberStatus(currentAmt, m.isKid);
+        m.status = autoStatus;
+        const badgeLabel = getStatusBadgeLabel(autoStatus);
+        return `
+          <tr>
+            <td>
+              <div style="font-weight: 700; color: var(--slate-800);">${escapeHtml(m.name)}</div>
+              <div style="display:flex; gap:0.5rem; margin-top:0.15rem;">
+                <button type="button" onclick="toggleMemberKid('${escapeHtml(m.id)}')" style="background:none;border:none;color:var(--slate-500);font-size:0.65rem;font-weight:700;cursor:pointer;padding:0;">
+                  ${m.isKid ? "Set Adult" : "Set Free / Kid"}
+                </button>
+                ${m.isCustom ? `<button type="button" onclick="deleteMember('${escapeHtml(m.id)}')" style="background:none;border:none;color:var(--coral-600);font-size:0.65rem;font-weight:700;cursor:pointer;padding:0;">Remove</button>` : ""}
+              </div>
+            </td>
+            <td>
+              <span id="status-badge-${escapeHtml(m.id)}" class="status-pill ${autoStatus}" style="cursor: default;">
+                ${badgeLabel}
+              </span>
+            </td>
+            <td style="text-align: right;">
+              <input
+                type="number"
+                min="0"
+                step="50"
+                value="${currentAmt}"
+                oninput="updateMemberAmount('${escapeHtml(m.id)}', this.value)"
+                class="inline-input"
+                style="padding: 0.36rem 0.5rem; text-align: right; font-weight: 700;"
+              />
+            </td>
+          </tr>
+        `;
+      }).join("");
+
+      const allocTbody = document.getElementById("allocation-tbody");
+      const totalBudget = budgetAllocation.reduce((s, a) => s + (Number(a.amount) || 0), 0);
+
+      allocTbody.innerHTML = budgetAllocation.map(a => `
+        <tr>
+          <td style="font-weight: 800; color: var(--slate-800);">${escapeHtml(a.category)}</td>
+          <td style="text-align: right;">
+            <input
+              type="number"
+              min="0"
+              step="100"
+              value="${Number(a.amount) || 0}"
+              oninput="updateAllocationAmount('${escapeHtml(a.id)}', this.value)"
+              class="inline-input"
+              style="padding: 0.36rem 0.5rem; text-align: right; font-weight: 700;"
+            />
+          </td>
+        </tr>
+      `).join("") + `
+        <tr style="background: var(--ocean-50); font-weight: 800; color: var(--ocean-900);">
+          <td>TOTAL BUDGET</td>
+          <td id="alloc-total-cell" style="text-align: right; font-size: 0.88rem;">${formatPeso(totalBudget)}</td>
+        </tr>
+      `;
+
+      updateAmbaganSummary();
+    }
+
+    function toggleMemberKid(id) {
+      const m = membersLedger.find(x => x.id === id);
+      if (!m) return;
+      m.isKid = !m.isKid;
+      m.status = computeMemberStatus(m.amount, m.isKid);
+      saveAllState();
+      renderAmbaganTab();
+    }
+
+    function updateMemberAmount(id, value) {
+      const m = membersLedger.find(x => x.id === id);
+      if (m) {
+        const numVal = Math.max(0, Number(value) || 0);
+        m.amount = numVal;
+        m.status = computeMemberStatus(numVal, m.isKid);
+
+        const badge = document.getElementById("status-badge-" + id);
+        if (badge) {
+          badge.textContent = getStatusBadgeLabel(m.status);
+          badge.className = `status-pill ${m.status}`;
+        }
+
+        saveAllState();
+        updateAmbaganSummary();
+      }
+    }
+
+    function cycleMemberStatus(id) {
+      const m = membersLedger.find(x => x.id === id);
+      if (!m) return;
+      const order = ["paid", "unpaid", "free"];
+      m.status = order[(order.indexOf(m.status) + 1) % order.length];
+      saveAllState();
+      renderAmbaganTab();
+    }
+
+    function updateAllocationAmount(id, value) {
+      const a = budgetAllocation.find(x => x.id === id);
+      if (a) {
+        a.amount = Math.max(0, Number(value) || 0);
+        saveAllState();
+        updateAmbaganSummary();
+        updatePriceSummary();
+      }
+    }
+
+    function updateAmbaganSummary() {
+      const totalLedger = membersLedger.reduce((s, m) => s + (Number(m.amount) || 0), 0);
+      const paidOnlyTotal = membersLedger
+        .filter(m => m.status === "paid")
+        .reduce((s, m) => s + (Number(m.amount) || 0), 0);
+      const totalBudget = budgetAllocation.reduce((s, a) => s + (Number(a.amount) || 0), 0);
+      const variance = totalLedger - totalBudget;
+
+      document.getElementById("contrib-total-ledger").textContent = formatPeso(totalLedger);
+      document.getElementById("contrib-paid-actual").textContent = `Paid Status Total: ${formatPeso(paidOnlyTotal)}`;
+      const allocCell = document.getElementById("alloc-total-cell");
+      if (allocCell) allocCell.textContent = formatPeso(totalBudget);
+
+      const varBox = document.getElementById("contrib-variance-box");
+      const varVal = document.getElementById("contrib-variance-val");
+      const varSub = document.getElementById("contrib-variance-sub");
+
+      varBox.classList.remove("amber", "coral");
+      if (variance === 0) {
+        varVal.textContent = "₱0";
+        varSub.textContent = "Balanced: ₱0 kulang/sobra";
+      } else if (variance > 0) {
+        varBox.classList.add("amber");
+        varVal.textContent = `+${formatPeso(variance)}`;
+        varSub.textContent = "Sobra vs. Total Budget";
+      } else {
+        varBox.classList.add("coral");
+        varVal.textContent = `-${formatPeso(Math.abs(variance))}`;
+        varSub.textContent = "Kulang pa vs. Total Budget";
+      }
+    }
+
+    function openMemberModal() {
+      document.getElementById("member-modal").classList.remove("hidden");
+      document.getElementById("new-member-name").focus();
+    }
+
+    function closeMemberModal() {
+      document.getElementById("member-modal").classList.add("hidden");
+      document.getElementById("new-member-name").value = "";
+    }
+
+    function handleAddMember(e) {
+      e.preventDefault();
+      const name = document.getElementById("new-member-name").value.trim();
+      const amount = Math.max(0, Number(document.getElementById("new-member-amount").value) || 0);
+      if (!name) return;
+
+      membersLedger.push({
+        id: "m-custom-" + Date.now(),
+        name,
+        amount,
+        isKid: false,
+        status: computeMemberStatus(amount, false),
+        isCustom: true
+      });
+      saveAllState();
+      closeMemberModal();
+      renderAmbaganTab();
+      showToast("Naidagdag na sa Member Ledger!");
+    }
+
+    function deleteMember(id) {
+      membersLedger = membersLedger.filter(m => m.id !== id);
+      saveAllState();
+      renderAmbaganTab();
+      showToast("Tinanggal ang member.");
+    }
+
+    function copyAmbaganToClipboard() {
+      const totalLedger = membersLedger.reduce((s, m) => s + (Number(m.amount) || 0), 0);
+      const totalBudget = budgetAllocation.reduce((s, a) => s + (Number(a.amount) || 0), 0);
+      const lines = [
+        "🏖️ PA-OUTING NI KA LUCENA • HUGOM BEACH, BATANGAS (DEC 5–6, 2026)",
+        "WHEN: IN: December 05, 2026 / 6:00 am • OUT: December 06, 2026 / 5:00 pm",
+        "WHERE: At Hugom Beach, Batangas (2nd Floor, Beachfront)",
+        "NO. OF PAX: 16 (Including the driver)",
+        "",
+        "💸 MEMBER LEDGER & CONTRIBUTIONS:",
+        ...membersLedger.map(m => `• ${m.name}: ${Number(m.amount) || 0} (${getStatusBadgeLabel(m.status)})`),
+        `TOTAL COLLECTED: ${formatPeso(totalLedger)}`,
+        "",
+        "📊 BUDGET ALLOCATION:",
+        ...budgetAllocation.map(a => `• ${a.category}: ${formatPeso(a.amount)}`),
+        `TOTAL BUDGET: ${formatPeso(totalBudget)}`
+      ];
+      copyTextFallback(lines.join("\n"), "Copied Ambagan & Budget para sa GC!");
+    }
+
+    // ==================== TAB NAVIGATION ====================
+    function switchTab(tab) {
+      currentTab = tab;
+      ["menu", "checklist", "itinerary", "presyo", "ambagan"].forEach(t => {
+        const sec = document.getElementById("tab-" + t);
+        const nav = document.getElementById("nav-" + t);
+        if (sec) sec.classList.toggle("hidden", t !== tab);
+        if (nav) nav.classList.toggle("active", t === tab);
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // ==================== INITIALIZE APP ====================
+    window.addEventListener("DOMContentLoaded", () => {
+      loadAllState();
+      renderAll();
+    });
+  </script>
+</body>
+</html>
