@@ -514,6 +514,52 @@
       flex-shrink: 0;
     }
 
+    .btn-delete-item {
+      background: var(--coral-50);
+      color: var(--coral-600);
+      border: 1px solid var(--coral-100);
+      padding: 0 0.85rem;
+      min-height: 2.65rem;
+      border-radius: 1rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .btn-delete-item.active {
+      background: var(--coral-600);
+      border-color: var(--coral-600);
+      color: var(--white);
+    }
+
+    .delete-mode-hint {
+      background: var(--coral-50);
+      border: 1px solid var(--coral-100);
+      color: var(--coral-600);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.55rem 0.8rem;
+      border-radius: 0.75rem;
+    }
+
+    .btn-delete-row {
+      background: var(--coral-50);
+      border: 1px solid var(--coral-100);
+      color: var(--coral-600);
+      border-radius: 0.55rem;
+      padding: 0.3rem 0.55rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+      align-self: center;
+    }
+
     .filter-scroll {
       display: flex;
       align-items: center;
@@ -799,6 +845,67 @@
       font-size: 0.75rem;
       color: var(--slate-500);
       margin-bottom: 0.85rem;
+    }
+
+    .alarm-box {
+      margin-top: 0.9rem;
+      padding: 0.8rem 0.9rem;
+      border-radius: 0.85rem;
+      background: var(--ocean-50);
+      border: 1px solid var(--ocean-100);
+    }
+
+    .alarm-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--ocean-800);
+    }
+
+    .alarm-sub {
+      font-size: 0.74rem;
+      color: var(--slate-600);
+      margin-top: 0.2rem;
+    }
+
+    .alarm-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.6rem;
+    }
+
+    .btn-alarm-primary,
+    .btn-alarm-secondary {
+      flex: 1 1 10rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.4rem;
+      padding: 0 0.8rem;
+      border-radius: 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-alarm-primary {
+      background: var(--ocean-600);
+      color: var(--white);
+      border: none;
+      box-shadow: 0 1px 3px rgba(13, 148, 136, 0.25);
+    }
+
+    .btn-alarm-secondary {
+      background: var(--white);
+      color: var(--ocean-700);
+      border: 1px solid var(--ocean-100);
+    }
+
+    .alarm-note {
+      font-size: 0.7rem;
+      color: var(--slate-500);
+      margin-top: 0.5rem;
     }
 
     .inline-input {
@@ -1277,6 +1384,13 @@
         <button type="button" onclick="openAddModal()" class="btn-add-item">
           <span>+ Add Item</span>
         </button>
+        <button type="button" id="btn-delete-mode" onclick="toggleDeleteMode()" class="btn-delete-item" aria-pressed="false">
+          <span id="delete-mode-label">🗑️ Delete Item</span>
+        </button>
+      </div>
+
+      <div id="delete-mode-hint" class="delete-mode-hint hidden">
+        🗑️ Delete mode: i-tap ang <strong>Delete</strong> sa item na gusto mong tanggalin. I-click ang <strong>Done</strong> kapag tapos na. (Maibabalik ang default items gamit ang Reload Default Data.)
       </div>
 
       <div class="filter-scroll">
@@ -1317,21 +1431,31 @@
           <span>🛒 Mamalengke — Friday (Dec. 4)</span>
           <button type="button" onclick="reloadAllDefaultData()" class="btn-text-link">Reload Default Data</button>
         </div>
-        <p class="section-card-sub">I-edit kung sino ang mamalengke sa Morning o Afternoon at ang notes para sa Friday (Dec. 4).</p>
+        <p class="section-card-sub">I-edit kung sino ang mamalengke sa umaga ng Friday (Dec. 4), ang oras, at ang notes.</p>
 
         <div class="stack-sm">
           <div>
-            <label class="form-label" for="market-morning">🌅 Morning Mamalengke (Friday, Dec. 4 AM)</label>
+            <label class="form-label" for="market-morning">🌅 Mamalengke (Friday, Dec. 4 AM)</label>
             <input type="text" id="market-morning" oninput="updateMarketTeam('morning', this.value)" class="inline-input" placeholder="Ilagay ang pangalan ng mamalengke sa umaga..." />
           </div>
           <div>
-            <label class="form-label" for="market-afternoon">🌇 Afternoon Mamalengke (Friday, Dec. 4 PM)</label>
-            <input type="text" id="market-afternoon" oninput="updateMarketTeam('afternoon', this.value)" class="inline-input" placeholder="Ilagay ang pangalan ng mamalengke sa hapon..." />
+            <label class="form-label" for="market-time">⏰ Oras ng Pamamalengke</label>
+            <input type="time" id="market-time" oninput="updateMarketTeam('time', this.value)" class="inline-input" value="07:00" />
           </div>
           <div>
             <label class="form-label" for="market-notes">📝 Notes / Reminders (Dec. 4)</label>
             <input type="text" id="market-notes" oninput="updateMarketTeam('notes', this.value)" class="inline-input" placeholder="Hal. Karne, isda, at groceries..." />
           </div>
+        </div>
+
+        <div class="alarm-box">
+          <div class="alarm-title">🔔 Alarm para sa Mamalengke</div>
+          <p class="alarm-sub" id="alarm-summary">Magre-remind sa gabi bago (9:00 PM), 1 oras bago, at 15 minuto bago ang alis.</p>
+          <div class="alarm-actions">
+            <button type="button" onclick="downloadMarketAlarm()" class="btn-alarm-primary">⏰ I-save ang Alarm sa Calendar</button>
+            <a id="gcal-link" href="#" target="_blank" rel="noopener" class="btn-alarm-secondary">📅 Google Calendar</a>
+          </div>
+          <p class="alarm-note">Tip: I-send ang na-download na calendar file sa GC para ma-add din ng ibang mamalengke sa phone nila. Gumagana ang alarm kahit sarado ang website.</p>
         </div>
       </div>
 
@@ -1340,7 +1464,7 @@
           <span>🗓️ Outing Itinerary (Dec. 5 – Dec. 6)</span>
           <button type="button" onclick="copyItineraryToClipboard()" class="btn-text-link" style="text-decoration:none;">📋 Copy</button>
         </div>
-        <p class="section-card-sub">I-edit ang column na <strong>Naka-toka / Magluluto</strong> sa bawat schedule row.</p>
+        <p class="section-card-sub">Schedule ng activities para sa Dec. 5 – Dec. 6.</p>
 
         <div class="table-scroll">
           <table class="data-table">
@@ -1348,7 +1472,6 @@
               <tr>
                 <th>Time</th>
                 <th>Activity Notes</th>
-                <th style="min-width: 9.5rem;">Naka-toka / Magluluto</th>
               </tr>
             </thead>
             <tbody id="itinerary-tbody"></tbody>
@@ -1906,7 +2029,7 @@
     // ==================== DEFAULT ITINERARY & TOKA ====================
     const DEFAULT_MARKET_TEAM = {
       morning: "",
-      afternoon: "",
+      time: "07:00",
       notes: "Mamalengke sa Friday (Dec. 4) — Karne, isda, gulay, Fresh Fruits, at groceries."
     };
 
@@ -2005,7 +2128,8 @@
     // ==================== APPLICATION STATE ====================
     let checkedState = {};
     let customItems = [];
-    let marketTeam = { morning: "", afternoon: "", notes: "" };
+    let deletedItems = [];
+    let marketTeam = { morning: "", time: "07:00", notes: "" };
     let itineraryData = [];
     let tokaDishes = [];
     let priceItems = [];
@@ -2016,6 +2140,7 @@
     let currentFilter = "all";
     let hideOptional = false;
     let searchQuery = "";
+    let deleteMode = false;
     let menuDayFilter = "all";
     let allMealsExpanded = true;
 
@@ -2023,6 +2148,7 @@
       return {
         checkedState: {},
         customItems: [],
+        deletedItems: [],
         marketTeam: JSON.parse(JSON.stringify(DEFAULT_MARKET_TEAM)),
         itineraryData: JSON.parse(JSON.stringify(DEFAULT_ITINERARY)),
         tokaDishes: JSON.parse(JSON.stringify(DEFAULT_TOKA_DISHES)),
@@ -2036,9 +2162,12 @@
       const def = buildDefaultBundle();
       checkedState = (bundle.checkedState && typeof bundle.checkedState === "object") ? bundle.checkedState : def.checkedState;
       customItems = Array.isArray(bundle.customItems) ? bundle.customItems : def.customItems;
+      deletedItems = Array.isArray(bundle.deletedItems) ? bundle.deletedItems : def.deletedItems;
       marketTeam = (bundle.marketTeam && typeof bundle.marketTeam === "object")
         ? { ...def.marketTeam, ...bundle.marketTeam }
         : def.marketTeam;
+      delete marketTeam.afternoon;
+      if (!/^\d{2}:\d{2}$/.test(marketTeam.time || "")) marketTeam.time = def.marketTeam.time;
       itineraryData = (Array.isArray(bundle.itineraryData) && bundle.itineraryData.length > 0)
         ? bundle.itineraryData
         : def.itineraryData;
@@ -2070,6 +2199,7 @@
         const payload = {
           checkedState,
           customItems,
+          deletedItems,
           marketTeam,
           itineraryData,
           tokaDishes,
@@ -2260,7 +2390,7 @@
         const extra = customItems.filter(item => item.categoryId === cat.id);
         return {
           ...cat,
-          items: [...cat.items, ...extra]
+          items: [...cat.items, ...extra].filter(item => !deletedItems.includes(item.id))
         };
       });
     }
@@ -2308,7 +2438,7 @@
               ${filteredItems.map(item => {
                 const isChecked = !!checkedState[item.id];
                 return `
-                  <div onclick="toggleItem('${escapeHtml(item.id)}')" class="check-row ${isChecked ? "checked" : ""}">
+                  <div onclick="${deleteMode ? "" : `toggleItem('${escapeHtml(item.id)}')`}" class="check-row ${isChecked ? "checked" : ""}">
                     <div class="checkbox-box">
                       ${isChecked ? `
                         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
@@ -2324,7 +2454,11 @@
                       </div>
                       ${item.note ? `<p class="item-note">${escapeHtml(item.note)}</p>` : ""}
                     </div>
-                    ${item.isCustom ? `
+                    ${deleteMode ? `
+                      <button type="button" onclick="deleteItem(event, '${escapeHtml(item.id)}')" class="btn-delete-row" title="Tanggalin ang item">
+                        🗑️ Delete
+                      </button>
+                    ` : item.isCustom ? `
                       <button type="button" onclick="deleteCustomItem(event, '${escapeHtml(item.id)}')" class="btn-delete-custom" title="Remove custom item">
                         ✕
                       </button>
@@ -2463,6 +2597,30 @@
       showToast("Tinanggal ang custom item.");
     }
 
+    function toggleDeleteMode() {
+      deleteMode = !deleteMode;
+      const btn = document.getElementById("btn-delete-mode");
+      btn.classList.toggle("active", deleteMode);
+      btn.setAttribute("aria-pressed", String(deleteMode));
+      document.getElementById("delete-mode-label").textContent = deleteMode ? "✓ Done" : "🗑️ Delete Item";
+      document.getElementById("delete-mode-hint").classList.toggle("hidden", !deleteMode);
+      renderChecklist();
+    }
+
+    function deleteItem(event, itemId) {
+      event.stopPropagation();
+      const isCustom = customItems.some(item => item.id === itemId);
+      if (isCustom) {
+        customItems = customItems.filter(item => item.id !== itemId);
+      } else if (!deletedItems.includes(itemId)) {
+        deletedItems.push(itemId);
+      }
+      delete checkedState[itemId];
+      saveAllState();
+      renderChecklist();
+      showToast("Tinanggal ang item sa Palengke List.");
+    }
+
     function openResetModal() {
       document.getElementById("reset-modal").classList.remove("hidden");
     }
@@ -2517,7 +2675,8 @@
     // ==================== TAB 3: ITINERARY & TOKA ====================
     function renderItineraryTab() {
       document.getElementById("market-morning").value = marketTeam.morning || "";
-      document.getElementById("market-afternoon").value = marketTeam.afternoon || "";
+      document.getElementById("market-time").value = marketTeam.time || "07:00";
+      updateAlarmUI();
       document.getElementById("market-notes").value = marketTeam.notes || "";
 
       const tbody = document.getElementById("itinerary-tbody");
@@ -2526,23 +2685,13 @@
         let dividerHtml = "";
         if (row.day !== lastDay) {
           lastDay = row.day;
-          dividerHtml = `<tr class="day-divider"><td colspan="3">📅 ${escapeHtml(row.day)}</td></tr>`;
+          dividerHtml = `<tr class="day-divider"><td colspan="2">📅 ${escapeHtml(row.day)}</td></tr>`;
         }
         return `
           ${dividerHtml}
           <tr>
             <td style="white-space: nowrap; font-weight: 700; color: var(--ocean-800);">${escapeHtml(row.time)}</td>
             <td style="color: var(--slate-700);">${escapeHtml(row.activity)}</td>
-            <td>
-              <input
-                type="text"
-                value="${escapeHtml(row.assignee || "")}"
-                oninput="updateItineraryAssignee('${escapeHtml(row.id)}', this.value)"
-                placeholder="Naka-toka / Magluluto..."
-                class="inline-input"
-                style="padding: 0.38rem 0.55rem; font-size: 0.75rem;"
-              />
-            </td>
           </tr>
         `;
       }).join("");
@@ -2566,14 +2715,7 @@
     function updateMarketTeam(field, value) {
       marketTeam[field] = value;
       saveAllState();
-    }
-
-    function updateItineraryAssignee(id, value) {
-      const item = itineraryData.find(r => r.id === id);
-      if (item) {
-        item.assignee = value;
-        saveAllState();
-      }
+      updateAlarmUI();
     }
 
     function updateDishCook(id, value) {
@@ -2584,11 +2726,110 @@
       }
     }
 
+    // ==================== MAMALENGKE ALARM ====================
+    // Philippine time (Asia/Manila, UTC+8, no daylight saving)
+    const MARKET_DATE = { y: 2026, m: 12, d: 4 };
+    const MANILA_OFFSET_HOURS = 8;
+
+    function getMarketStartUtc() {
+      const [hh, mm] = (/^\d{2}:\d{2}$/.test(marketTeam.time || "") ? marketTeam.time : "07:00").split(":").map(Number);
+      return new Date(Date.UTC(MARKET_DATE.y, MARKET_DATE.m - 1, MARKET_DATE.d, hh - MANILA_OFFSET_HOURS, mm));
+    }
+
+    function formatMarketTime(t) {
+      const [hh, mm] = (/^\d{2}:\d{2}$/.test(t || "") ? t : "07:00").split(":").map(Number);
+      const suffix = hh >= 12 ? "PM" : "AM";
+      const h12 = hh % 12 === 0 ? 12 : hh % 12;
+      return `${h12}:${String(mm).padStart(2, "0")} ${suffix}`;
+    }
+
+    function toIcsUtc(date) {
+      return date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    }
+
+    function icsEscape(str) {
+      return String(str || "").replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n");
+    }
+
+    function getMarketEventDetails() {
+      const who = marketTeam.morning ? `Mamalengke: ${marketTeam.morning}` : "Mamalengke: TBA";
+      const notes = marketTeam.notes ? `Notes: ${marketTeam.notes}` : "";
+      return [who, notes, "Dalhin ang Palengke List!"].filter(Boolean).join("\n");
+    }
+
+    function getNightBeforeMinutes(start) {
+      // Minutes between 9:00 PM (Manila) the night before and the start time
+      const nightBefore = new Date(Date.UTC(MARKET_DATE.y, MARKET_DATE.m - 1, MARKET_DATE.d - 1, 21 - MANILA_OFFSET_HOURS, 0));
+      return Math.round((start - nightBefore) / 60000);
+    }
+
+    function updateAlarmUI() {
+      const timeLabel = formatMarketTime(marketTeam.time);
+      const summary = document.getElementById("alarm-summary");
+      if (summary) {
+        summary.textContent = `Friday, Dec. 4 • ${timeLabel}. Magre-remind sa gabi bago (9:00 PM), 1 oras bago, at 15 minuto bago ang alis.`;
+      }
+      const link = document.getElementById("gcal-link");
+      if (link) {
+        const start = getMarketStartUtc();
+        const end = new Date(start.getTime() + 2 * 60 * 60 * 1000);
+        const params = new URLSearchParams({
+          action: "TEMPLATE",
+          text: "🛒 Mamalengke para sa Outing",
+          dates: `${toIcsUtc(start)}/${toIcsUtc(end)}`,
+          details: getMarketEventDetails(),
+          ctz: "Asia/Manila"
+        });
+        link.href = `https://calendar.google.com/calendar/render?${params.toString()}`;
+      }
+    }
+
+    function downloadMarketAlarm() {
+      const start = getMarketStartUtc();
+      const end = new Date(start.getTime() + 2 * 60 * 60 * 1000);
+      const nightBefore = getNightBeforeMinutes(start);
+      const alarm = (minutes, label) => [
+        "BEGIN:VALARM",
+        "ACTION:DISPLAY",
+        `DESCRIPTION:${icsEscape(label)}`,
+        `TRIGGER:-PT${minutes}M`,
+        "END:VALARM"
+      ];
+      const lines = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Pa-Outing ni Ka Lucena//Mamalengke Alarm//TL",
+        "CALSCALE:GREGORIAN",
+        "METHOD:PUBLISH",
+        "BEGIN:VEVENT",
+        `UID:mamalengke-${MARKET_DATE.y}${MARKET_DATE.m}${MARKET_DATE.d}@pa-outing`,
+        `DTSTAMP:${toIcsUtc(new Date())}`,
+        `DTSTART:${toIcsUtc(start)}`,
+        `DTEND:${toIcsUtc(end)}`,
+        `SUMMARY:${icsEscape("🛒 Mamalengke para sa Outing")}`,
+        `DESCRIPTION:${icsEscape(getMarketEventDetails())}`,
+        ...(nightBefore > 60 ? alarm(nightBefore, "Bukas na ang pamamalengke! Ihanda ang Palengke List.") : []),
+        ...alarm(60, "1 oras na lang bago mamalengke!"),
+        ...alarm(15, "Alis na papuntang palengke!"),
+        "END:VEVENT",
+        "END:VCALENDAR"
+      ];
+      const blob = new Blob([lines.join("\r\n")], { type: "text/calendar;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "mamalengke-alarm.ics";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      showToast("Na-download ang alarm! Buksan para i-add sa Calendar.");
+    }
+
     function copyItineraryToClipboard() {
       const lines = [
         "🗓️ PA-OUTING NI KA LUCENA • ITINERARY & TOKA (DEC 5–6, 2026)",
-        `🛒 Mamalengke (Fri Dec. 4 AM): ${marketTeam.morning || "TBA"}`,
-        `🛒 Mamalengke (Fri Dec. 4 PM): ${marketTeam.afternoon || "TBA"}`,
+        `🛒 Mamalengke (Fri Dec. 4, ${formatMarketTime(marketTeam.time)}): ${marketTeam.morning || "TBA"}`,
         marketTeam.notes ? `📝 Notes: ${marketTeam.notes}` : "",
         ""
       ].filter(Boolean);
@@ -2599,8 +2840,7 @@
           curDay = r.day;
           lines.push(`--- ${curDay.toUpperCase()} ---`);
         }
-        const toka = r.assignee ? ` [Toka: ${r.assignee}]` : "";
-        lines.push(`• ${r.time} - ${r.activity}${toka}`);
+        lines.push(`• ${r.time} - ${r.activity}`);
       });
 
       lines.push("", "👨‍🍳 TOKA PER PUTAHE:");
